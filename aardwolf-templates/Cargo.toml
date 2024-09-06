@@ -7,7 +7,7 @@ build = "build.rs"
 
 [build-dependencies]
 config = "0.14.0"
-ructe = "0.13"
+ructe = "0.17.2" # Careted to require exactly 0.13 because newer versions break the build.
 
 [dependencies]
 gettext = "0.4"
@@ -31,3 +31,9 @@ path = "../aardwolf-models"
 [dependencies.aardwolf-yew-frontend]
 version = "0.1.0"
 path = "../aardwolf-yew-frontend"
+
+#- 
+# Adding syn for template compilation
+[dependencies.syn]
+version = "2.0.77"
+features = ["full"]
