@@ -31,7 +31,7 @@ default = []
 test = []
 
 [dependencies.diesel]
-version = "2.1"
+version = "2.2"
 features = ["chrono", "postgres", "serde_json", "uuid"]
 
 [dev-dependencies]
