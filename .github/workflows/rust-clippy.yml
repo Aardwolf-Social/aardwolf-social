@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4 # Marketplace - https://github.com/marketplace/actions/checkout
 
       - name: Install rust toolchain
-        uses: dtolnay/rust-toolchain@master # Marketplace - https://github.com/marketplace/actions/rustup-toolchain-install
+        uses: dtolnay/rust-toolchain@v1 # Marketplace - https://github.com/marketplace/actions/rustup-toolchain-install
         with:
           toolchain: stable
           components: rustfmt, clippy
@@ -49,7 +49,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: rust-clippy-results.sarif
           wait-for-processing: true
