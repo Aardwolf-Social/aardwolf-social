@@ -12,6 +12,18 @@ pub struct InputSelect<'a> {
     pub(crate) selected: String,
 }
 
+impl<'a> Default for InputSelect<'a> {
+    fn default() -> Self {
+        InputSelect {
+            name: "",
+            label: "".to_string(),
+            selected_value: "".to_string(),
+            options: vec![],
+            error: None,
+        }
+    }
+}
+
 impl<'a> InputSelect<'a> {
     pub fn new(
         name: &'a str,
