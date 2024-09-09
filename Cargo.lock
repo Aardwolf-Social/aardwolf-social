@@ -83,6 +83,7 @@ dependencies = [
  "aardwolf-models",
  "aardwolf-types",
  "aardwolf-yew-frontend",
+ "ahash",
  "config",
  "gettext",
  "gettext-macros",

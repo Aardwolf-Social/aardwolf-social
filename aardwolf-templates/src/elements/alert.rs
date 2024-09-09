@@ -18,7 +18,7 @@ impl std::fmt::Display for AlertKind {
         write!(f, "{}", s)
     }
 }
-
+#[derive(Debug)]
 pub struct Alert {
     pub(crate) kind: AlertKind,
     pub(crate) message: String,

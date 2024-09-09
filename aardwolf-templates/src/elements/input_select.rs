@@ -9,34 +9,23 @@ pub struct InputSelect<'a> {
     pub selected_value: String,
     pub options: Vec<SelectOption<'a>>,
     pub error: Option<String>,
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct SelectOption<'a> {
-    pub value: &'a str,
-    pub display: String,
-}
-
-impl<'a> Default for InputSelect<'a> {
-    fn default() -> Self {
-        InputSelect {
-            name: "",
-            label: "".to_string(),
-            selected_value: "".to_string(),
-            options: vec![],
-            error: None,
-        }
-    }
+    pub(crate) selected: String,
 }
 
 impl<'a> InputSelect<'a> {
-    pub fn with_follow_policy_options(catalog: &'a Catalog) -> Self {
+    pub fn new(
+        name: &'a str,
+        label: Option<&str>,
+        value: &str,
+        error: Option<&str>,
+    ) -> Self {
         Self {
-            name: "follow_policy",
-            label: i18n!(catalog, "Follow policy"),
-            selected_value: FollowPolicy::AutoAccept.to_string(),
-            options: follow_policy_options(catalog),
-            error: None,
+            name,
+            label: label.map(|l| l.to_string()).unwrap_or_default(),
+            selected_value: value.to_string(),
+            options: Vec::new(),
+            error: error.map(|e| e.to_string()),
+            selected: value.to_string(),
         }
     }
 
@@ -47,8 +36,15 @@ impl<'a> InputSelect<'a> {
             selected_value: PostVisibility::Public.to_string(),
             options: visibility_options(catalog),
             error: None,
+            selected: PostVisibility::Public.to_string(),
         }
     }
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct SelectOption<'a> {
+    pub value: &'a str,
+    pub display: String,
 }
 
 fn follow_policy_options(catalog: &Catalog) -> Vec<SelectOption<'_>> {
@@ -89,3 +85,13 @@ fn visibility_options(catalog: &Catalog) -> Vec<SelectOption<'_>> {
     ]
 }
 
+impl InputSelect<'_> {
+    pub fn with_follow_policy_options(catalog: &Catalog) -> Vec<SelectOption<'_>> {
+        follow_policy_options(catalog)
+    }
+}
+
+enum ValidateFollowPolicyFail {
+    Listed,
+    // Other variants...
+}

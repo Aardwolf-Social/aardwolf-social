@@ -17,7 +17,7 @@ mod default_impls {
 
     pub trait DbAction {
         type Item;
-        type Error: Fail;
+        type Error: std::error::Error;
 
         fn db_action(self, conn: &PgConnection) -> Result<Self::Item, Self::Error>;
     }
@@ -30,12 +30,13 @@ mod actix_web_impls {
     use diesel::PgConnection;
     use futures::future::{BoxFuture, FutureExt, TryFutureExt};
     use r2d2::Pool;
+    use std::error::Error as StdError;
     use thiserror::Error;
 
     #[derive(Debug, Error)]
     pub enum DbActionError<E>
     where
-        E: std::error::Error,
+        E: StdError,
     {
         #[error("Error in Db Action, {}", _0)]
         Error(#[source] E),
@@ -49,16 +50,16 @@ mod actix_web_impls {
 
     impl<E> From<BlockingError> for DbActionError<E>
     where
-        E: std::error::Error,
+        E: StdError,
     {
-        fn from(e: BlockingError) -> Self {
-            DbActionError::Canceled  // TODO: Add actual handling for this
+        fn from(_: BlockingError) -> Self {
+            DbActionError::Canceled
         }
     }
 
     impl<E> From<r2d2::Error> for DbActionError<E>
     where
-        E: std::error::Error,
+        E: StdError,
     {
         fn from(e: r2d2::Error) -> Self {
             DbActionError::Pool(e)
@@ -67,7 +68,7 @@ mod actix_web_impls {
 
     pub trait DbAction {
         type Item: Send + 'static;
-        type Error: std::error::Error + Send;
+        type Error: StdError + Send;
 
         fn db_action(self, conn: &mut PgConnection) -> Result<Self::Item, Self::Error>;
 
@@ -78,17 +79,15 @@ mod actix_web_impls {
         where
             Self: Sized + Send + 'static,
         {
-            let result = block(move || -> Result<Self::Item, DbActionError<Self::Error>> {
+            block(move || -> Result<Self::Item, DbActionError<Self::Error>> {
                 let conn = &mut *pool.get()?;
 
                 self.db_action(conn).map_err(DbActionError::Error)
             })
-            .map_err(DbActionError::from);
-
-            // Flatten nested result
-            let result = result.map(|result| result.and_then(|inner| inner));
-
-            result.boxed()
+            .map_err(DbActionError::from)
+            .map(|result| result.and_then(|inner| inner))
+            .boxed()
         }
     }
 }
+

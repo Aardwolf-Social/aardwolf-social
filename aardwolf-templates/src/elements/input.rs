@@ -79,3 +79,10 @@ pub struct InputCheckbox<'a> {
     pub(crate) checked: bool,
     pub(crate) error: Option<String>,
 }
+
+pub enum InputKind {
+    Text,
+    Checkbox,
+    Select,     
+    
+}

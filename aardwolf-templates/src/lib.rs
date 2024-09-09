@@ -1,5 +1,3 @@
-#![allow(clippy::inline_fn_without_body)]
-
 use gettext_macros::init_i18n;
 use rocket_i18n::Translations;
 
@@ -18,22 +16,12 @@ pub mod first_login;
 pub mod sign_in;
 pub mod sign_up;
 
-pub use self::{
-    asides::Shortcuts,
-    elements::{
-        Alert, AlertKind, Input, InputCheckbox, InputEmail, InputPassword, InputSelect, InputText,
-        InputTextarea,
-    },
-    first_login::FirstLogin,
-    sign_in::SignIn,
-    sign_up::SignUp,
-};
-
 pub trait Renderable {
     fn render(&self, writer: &mut dyn std::io::Write) -> std::io::Result<()>;
 }
 
 /// Returns an empty Translations object to disable translations due to issues with the gettext library.
-pub fn managed_translations() -> Translations {
-    Translations::new(Vec::new())
+pub fn disabled_translations() -> Translations {
+    Translations::default()
 }
+
