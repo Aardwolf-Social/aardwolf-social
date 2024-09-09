@@ -20,6 +20,7 @@ impl PostCreationForm {
             visibility: self.visibility,
             name: self.name.clone(),
             source: self.source.clone(),
+            username: String::new(),
         }
     }
 }
@@ -28,6 +29,7 @@ pub struct PostCreationFormState {
     pub visibility: PostVisibility,
     pub name: Option<String>,
     pub source: String,
+    pub username: String,
 }
 
 #[derive(Clone, Debug, Error, Serialize)]

@@ -24,9 +24,9 @@ pub use self::{
         Alert, AlertKind, Input, InputCheckbox, InputEmail, InputPassword, InputSelect, InputText,
         InputTextarea,
     },
-    first_login::*,
-    sign_in::*,
-    sign_up::*,
+    first_login::FirstLogin,
+    sign_in::SignIn,
+    sign_up::SignUp,
 };
 
 pub trait Renderable {
@@ -34,7 +34,6 @@ pub trait Renderable {
 }
 
 /// Returns an empty Translations object to disable translations due to issues with the gettext library.
-pub fn managed_state() -> Translations {
-    Vec::new()
+pub fn managed_translations() -> Translations {
+    Translations::new(Vec::new())
 }
-

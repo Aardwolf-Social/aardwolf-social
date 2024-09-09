@@ -17,4 +17,3 @@ impl<'a> Renderable for NavTop<'a> {
         crate::templates::home::nav_top_html(writer, self.catalog)
     }
 }
-

@@ -1,4 +1,4 @@
-use super::Input;
+use super::input::Input;
 
 pub struct InputText<'a> {
     name: &'a str,
