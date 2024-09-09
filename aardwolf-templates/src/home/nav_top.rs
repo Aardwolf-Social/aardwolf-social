@@ -13,8 +13,8 @@ impl<'a> NavTop<'a> {
 }
 
 impl<'a> Renderable for NavTop<'a> {
-    fn render(&self, w: &mut dyn std::io::Write) -> std::io::Result<()> {
-        crate::templates::home::nav_top_html(w, self.catalog)
+    fn render(&self, writer: &mut dyn std::io::Write) -> std::io::Result<()> {
+        crate::templates::home::nav_top_html(writer, self.catalog)
     }
 }
 

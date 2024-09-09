@@ -17,12 +17,24 @@ pub struct SelectOption<'a> {
     pub display: String,
 }
 
+impl<'a> Default for InputSelect<'a> {
+    fn default() -> Self {
+        InputSelect {
+            name: "",
+            label: "".to_string(),
+            selected_value: "".to_string(),
+            options: vec![],
+            error: None,
+        }
+    }
+}
+
 impl<'a> InputSelect<'a> {
     pub fn with_follow_policy_options(catalog: &'a Catalog) -> Self {
         Self {
             name: "follow_policy",
             label: i18n!(catalog, "Follow policy"),
-            selected_value: FollowPolicy::AutoAccept.into(),
+            selected_value: FollowPolicy::AutoAccept.to_string(),
             options: follow_policy_options(catalog),
             error: None,
         }
@@ -32,7 +44,7 @@ impl<'a> InputSelect<'a> {
         Self {
             name: "visibility",
             label: i18n!(catalog, "Post visibility"),
-            selected_value: PostVisibility::Public.into(),
+            selected_value: PostVisibility::Public.to_string(),
             options: visibility_options(catalog),
             error: None,
         }

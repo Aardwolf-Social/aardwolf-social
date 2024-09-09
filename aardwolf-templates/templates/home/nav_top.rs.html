@@ -1,5 +1,4 @@
-@use gettext_macros::i18n;
-@use crate::home::NavTop;
+@use crate::templates::home::NavTop;
 
 @(nav_top: &NavTop)
 
@@ -15,10 +14,10 @@
 
     <div class="navbar-menu">
         <div class="navbar-end">
-            <a class="navbar-item" href="/templates/asides/aside_settings.html">
+            <a class="navbar-item" href="/settings">
                 {{ i18n!(nav_top.catalog, "Settings") }}
             </a>
-            <a class="navbar-item" href="/templates/asides/aside_notifications.html">
+            <a class="navbar-item" href="/notifications">
                 {{ i18n!(nav_top.catalog, "Notifications") }}
             </a>
             <a class="navbar-item" href="/logout">

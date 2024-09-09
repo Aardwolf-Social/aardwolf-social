@@ -50,20 +50,6 @@ impl<'a> From<&'a InputEmail<'a>> for Input<'a> {
     }
 }
 
-impl<'a> From<&'a InputText<'a>> for Input<'a> {
-    fn from(t: &'a InputText<'a>) -> Self {
-        Input {
-            kind: "text",
-            name: t.name,
-            label: Some(t.label.clone()),
-            placeholder: t.placeholder.clone(),
-            icon: t.icon,
-            value: t.value,
-            error: t.error.clone(),
-        }
-    }
-}
-
 pub struct InputPassword<'a> {
     pub(crate) name: &'a str,
     pub(crate) label: String,
@@ -82,15 +68,6 @@ pub struct InputEmail<'a> {
     pub(crate) name: &'a str,
     pub(crate) label: String,
     pub(crate) placeholder: Option<String>,
-    pub(crate) value: &'a str,
-    pub(crate) error: Option<String>,
-}
-
-pub struct InputText<'a> {
-    pub(crate) name: &'a str,
-    pub(crate) label: String,
-    pub(crate) placeholder: Option<String>,
-    pub(crate) icon: Option<&'a str>,
     pub(crate) value: &'a str,
     pub(crate) error: Option<String>,
 }
