@@ -8,12 +8,13 @@ pub struct NavTop<'a> {
 
 impl<'a> NavTop<'a> {
     pub fn new(catalog: &'a Catalog) -> Self {
-        NavTop { catalog }
+        Self { catalog }
     }
 }
 
 impl<'a> Renderable for NavTop<'a> {
-    fn render(&self, write: &mut dyn std::io::Write) -> std::io::Result<()> {
-        crate::templates::home::nav_top(write, self)
+    fn render(&self, w: &mut dyn std::io::Write) -> std::io::Result<()> {
+        crate::templates::home::nav_top_html(w, self.catalog)
     }
 }
+

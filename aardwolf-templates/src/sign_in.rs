@@ -63,6 +63,6 @@ impl<'a> SignIn<'a> {
 
 impl<'a> Renderable for SignIn<'a> {
     fn render(&self, write: &mut dyn std::io::Write) -> std::io::Result<()> {
-        crate::templates::sign_in(write, self)
+        crate::templates::sign_in_html(write, self)
     }
 }

@@ -1,13 +1,13 @@
 @use crate::{InputCheckbox, templates::elements::icon};
 
-@(input: &InputCheckbox)
+@(checkbox: &InputCheckbox)
 
 <div class="aardwolf-input-wrapper">
-    <label for="@input.name">
-        @if let Some(ref i) = input.icon {
-            @:icon(i)
+    <label for="@checkbox.name">
+        @if let Some(icon) = &checkbox.icon {
+            @:icon(icon)
         }
-        @input.label
+        @checkbox.label
     </label>
     <div class="aardwolf-input aardwolf-checkbox-input">
         @if input.checked {
@@ -22,3 +22,4 @@
         }
     </div>
 </div>
+

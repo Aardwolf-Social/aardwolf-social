@@ -1,8 +1,21 @@
 pub struct InputTextarea<'a> {
-    pub(crate) name: &'a str,
-    pub(crate) label: Option<String>,
-    pub(crate) icon: Option<&'a str>,
-    pub(crate) placeholder: Option<String>,
-    pub(crate) value: &'a str,
-    pub(crate) error: Option<String>,
+    name: &'a str,
+    label: Option<String>,
+    icon: Option<&'a str>,
+    placeholder: Option<String>,
+    value: &'a str,
+    error: Option<String>,
+}
+
+impl<'a> Default for InputTextarea<'a> {
+    fn default() -> Self {
+        Self {
+            name: "",
+            label: None,
+            icon: None,
+            placeholder: None,
+            value: "",
+            error: None,
+        }
+    }
 }

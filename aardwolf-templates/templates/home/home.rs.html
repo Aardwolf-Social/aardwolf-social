@@ -1,30 +1,22 @@
 @use crate::{
 	home::Home,
-	templates::{base, home::{feed, nav_top}, posts::{new_post}, asides::{shortcuts}}
+	templates::{base, home::nav_top, home::new_post, home::feed, asides::shortcuts},
 };
 
-@(home: &Home)
+@(home_data: &Home)
 
-@:base(home.catalog, "Aardwolf | Home", {
-    @:nav_top(&home.nav_top)
-	<div class="columns is-mobile"><!-- Column Content Container -->
-	  <div class="left-column columns is-3"><!-- Left-column (Nav) -->
-
-		<!-- Left-hand Nav Menu -->
-		@:shortcuts(&home.shortcuts)
-
-	  </div><!-- /Left-column (Nav)-->
-	  <div class="right-column columns"><!-- Right-column (Main content) -->
-		<section class="section"><!-- Right-column Section -->
-
-		<!-- Right-hand Body Content -->
-		@:new_post(&home.new_post)
-		@:feed(&home.feed)
-
-		</section><!-- /Right-column Section -->
-	  </div><!-- /Right-column -->
-	</div><!-- /Column Content Container -->
+@:base(home_data.catalog, "Aardwolf | Home", {
+    @:nav_top(&home_data.nav_top)
+	<div class="columns is-mobile">
+	  <div class="column is-3">
+		@:shortcuts(&home_data.shortcuts)
+	  </div>
+	  <div class="column">
+		<section class="section">
+		  @:new_post(&home_data.new_post)
+		  @:feed(&home_data.feed)
+		</section>
+	  </div>
+	</div>
 })
-
-
 

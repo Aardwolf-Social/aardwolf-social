@@ -3,11 +3,12 @@ use gettext::Catalog;
 use crate::elements::{Alert, InputSelect, InputText, InputTextarea};
 
 pub struct ReplyPost<'a> {
-    pub(crate) catalog: &'a Catalog,
-    pub(crate) csrf: &'a str,
-    pub(crate) alert: Option<Alert>,
-    pub(crate) username: &'a str,
-    pub(crate) source: InputTextarea<'a>,
-    pub(crate) visibility: InputSelect<'a>,
-    pub(crate) name: InputText<'a>,
+    pub catalog: &'a Catalog,
+    pub csrf_token: &'a str,
+    pub alert: Option<Alert>,
+    pub author_username: &'a str,
+    pub post_source: InputTextarea<'a>,
+    pub post_visibility: InputSelect<'a>,
+    pub post_name: InputText<'a>,
 }
+

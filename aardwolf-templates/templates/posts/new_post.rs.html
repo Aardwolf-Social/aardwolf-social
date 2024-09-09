@@ -1,22 +1,14 @@
-@use gettext_macros::i18n;
-
-@use crate::{
-    posts::NewPost,
-    templates::{elements::{alert, input_select, input_text, input_textarea}},
-};
-
 @(new_post: &NewPost)
-
-<article class="media"><!-- Begin new post -->
+<article class="media">
     <figure class="media-left">
         <p class="image is-64x64">
-        <img src="https://bulma.io/images/placeholders/128x128.png" alt="@new_post.username">
+            <img src="https://bulma.io/images/placeholders/128x128.png" alt="@new_post.username">
         </p>
     </figure>
     <div class="media-content">
         <form method="POST" action="/posts/create">
-            @if let Some(ref a) = new_post.alert {
-                @:alert(a)
+            @if let Some(ref alert) = new_post.alert {
+                @:alert(alert)
             }
 
             <input type="hidden" name="csrf_token" value="@new_post.csrf">
@@ -26,7 +18,7 @@
             @:input_select(&new_post.visibility);
 
             @:input_text(&new_post.name);
-            <button>@i18n!(&new_post.catalog, "Awoo!")</button>
+            <button>@i18n!(&new_post.catalog, "Submit")</button>
         </form>
     </div>
-</article><!-- End of new post -->
+</article>

@@ -98,6 +98,6 @@ impl<'a> FirstLogin<'a> {
 
 impl<'a> Renderable for FirstLogin<'a> {
     fn render(&self, write: &mut dyn std::io::Write) -> std::io::Result<()> {
-        crate::templates::first_login(write, self)
+        crate::templates::first_login_html(write, self)
     }
 }

@@ -38,8 +38,11 @@ pub struct ValidatePostCreationFail {
     pub name: Option<ValidateNameError>,
 }
 
-#[derive(Clone, Debug, Serialize)]
-pub enum ValidateVisibilityError {}
+#[derive(Clone, Debug, Serialize, Error)]
+pub enum ValidateVisibilityError {
+    #[error("Invalid visibility")]
+    Invalid, // add this line
+}
 
 #[derive(Clone, Debug, Serialize, Error)]
 pub enum ValidateSourceError {
@@ -47,8 +50,11 @@ pub enum ValidateSourceError {
     Empty,
 }
 
-#[derive(Clone, Debug, Serialize)]
-pub enum ValidateNameError {}
+#[derive(Clone, Debug, Serialize, Error)]
+pub enum ValidateNameError {
+    #[error("Name must not be empty")]
+    Empty,
+}
 
 impl ValidatePostCreationFail {
     pub fn is_empty(&self) -> bool {
