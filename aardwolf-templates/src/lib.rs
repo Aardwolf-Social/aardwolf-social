@@ -24,4 +24,3 @@ pub trait Renderable {
 pub fn disabled_translations() -> Translations {
     Translations::default()
 }
-

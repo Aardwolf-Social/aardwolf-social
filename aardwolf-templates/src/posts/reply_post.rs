@@ -12,4 +12,3 @@ pub struct ReplyPost<'a> {
     pub visibility: InputSelect<'a>,
     pub title: InputText<'a>,
 }
-
