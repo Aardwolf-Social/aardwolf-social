@@ -3,8 +3,6 @@ use mime::TEXT_HTML;
 use serde_derive::{Deserialize, Serialize};
 use thiserror::Error;
 
-use std::fmt;
-
 use crate::{error::AardwolfFail, traits::Validate};
 
 #[derive(Clone, Debug, Deserialize)]
@@ -26,7 +24,7 @@ impl PostCreationForm {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct PostCreationFormState {
     pub visibility: PostVisibility,
     pub name: Option<String>,
@@ -46,33 +44,24 @@ pub enum ValidatePostCreationError {
 
 impl AardwolfFail for ValidatePostCreationError {}
 
-pub struct ValidatePostCreationForm(pub PostCreationForm);
+pub struct ValidatePostCreationForm(PostCreationForm);
 
 impl Validate for ValidatePostCreationForm {
     type Item = ValidatedPostCreationForm;
     type Error = ValidatePostCreationError;
 
-    fn validate(self) -> Result<Self::Item, Self::Error> {
-        let source = self.0.source.trim().to_string();
-        let content = source.clone();
-        let visibility = self.0.visibility;
-        let media_type = TEXT_HTML.into();
-
-        let name = match self.0.name {
-            Some(name) if name.trim().is_empty() => return Err(ValidatePostCreationError::EmptyName),
-            Some(name) => Some(name.trim().to_string()),
-            None => None,
-        };
-
-        if source.is_empty() {
+    fn validate(&self) -> Result<Self::Item, Self::Error> {
+        if self.0.source.is_empty() {
             return Err(ValidatePostCreationError::EmptySource);
         }
 
+        let name = self.0.name.as_deref().map(|n| n.trim().to_string()).filter(|n| !n.is_empty());
+
         Ok(ValidatedPostCreationForm {
-            media_type,
-            visibility,
-            content,
-            source,
+            media_type: TEXT_HTML,
+            visibility: self.0.visibility,
+            content: self.0.source.clone(),
+            source: self.0.source.clone(),
             name,
         })
     }
@@ -80,23 +69,9 @@ impl Validate for ValidatePostCreationForm {
 
 #[derive(Clone, Debug)]
 pub struct ValidatedPostCreationForm {
-    pub(crate) media_type: Mime,
-    pub(crate) visibility: PostVisibility,
-    pub(crate) content: String,
-    pub(crate) source: String,
-    pub(crate) name: Option<String>,
-}
-
-impl fmt::Display for ValidatePostCreationForm {
-    fn fmt(&mut self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self.validate() {
-            Err(ValidatePostCreationError::EmptyName) => write!(f, "Name must not be empty"),
-            Err(ValidatePostCreationError::EmptySource) => write!(f, "Source must not be empty"),
-            Err(ValidatePostCreationError::InvalidVisibility) => {
-                write!(f, "Invalid visibility")
-            }
-            _ => write!(f, "Validation successful"),
-            Ok(_) => todo!(),
-        }
-    }
+    pub media_type: Mime,
+    pub visibility: PostVisibility,
+    pub content: String,
+    pub source: String,
+    pub name: Option<String>,
 }
