@@ -66,4 +66,3 @@ impl<'a> NewPost<'a> {
         }
     }
 }
-

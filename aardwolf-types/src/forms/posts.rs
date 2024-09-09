@@ -3,6 +3,8 @@ use mime::TEXT_HTML;
 use serde_derive::{Deserialize, Serialize};
 use thiserror::Error;
 
+use std::fmt;
+
 use crate::{error::AardwolfFail, traits::Validate};
 
 #[derive(Clone, Debug, Deserialize)]

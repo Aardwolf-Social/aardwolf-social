@@ -20,6 +20,7 @@ impl<'a> Default for InputSelect<'a> {
             selected_value: "".to_string(),
             options: vec![],
             error: None,
+            selected: "".to_string(), // Add this line to provide a value for the selected field
         }
     }
 }
