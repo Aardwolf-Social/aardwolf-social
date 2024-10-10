@@ -5,14 +5,14 @@
 [![Docker Image CI](https://github.com/Aardwolf-Social/aardwolf/actions/workflows/docker.yml/badge.svg)](https://github.com/Aardwolf-Social/aardwolf/actions/workflows/docker.yml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
-# Aardwolf
+# Aardwolf Social
 
 <p align="center">
   <img alt="Aardwolf Social: Powering connected social communities with open software" src="/doc/images/aardwolf-banner_solid-bg.png" />
 </p>
 
 ### About
-Unlike mainstream social media sites that funnel the world into a single (advertising-filled) shared experience, we recognize that individuals with different identities and interests.  Aardwolf is a free, and open-source alternative to Facebook which respects user privacy.  Aardwolf servers (also called instances) are able to be customized to fit your community's needs, while still being able to communicate to one another.
+Unlike mainstream social media sites that funnel the world into a single (advertising-filled) shared experience, we recognize that individuals with different identities and interests.  Aardwolf is a free, and open-source alternative to Facebook which respects user privacy.  Aardwolf Social servers (also called instances) are able to be customized to fit your community's needs, while still being able to communicate to one another.
 
 ### Project Tour
 * .github/ -- CI/CD Files related to GitHub
@@ -22,7 +22,7 @@ Unlike mainstream social media sites that funnel the world into a single (advert
 * aardwolf-test-helpers/ -- Development functional test code
 * aardwolf-types/ -- Additional web app components
 * aardwolf-yew-frontend/ -- The Yew frontend application code
-* config/ -- Aardwolf app configuration files
+* config/ -- Aardwolf Social app configuration files
 * doc/ -- Documentation
 * docker/ -- Docker files
 * po/ -- Legacy directory for i18n translations
@@ -64,8 +64,8 @@ Once your ready to dive in please check out our [contributor's guidelines](/CONT
 #### List of Repositories
 Currently Aardwolf-Social is broken down into several repositories 
 - Aardwolf-Social "Main", the one you are presently on.
-- [Aardwolf Interface](https://github.com/Aardwolf-Social/aardwolf-interface), a repo to independently work on, and test Frontend development.
-- [Aardwolf Website](https://github.com/Aardwolf-Social/aardwolf-website), is where the Jekyll site is deployed from.
+- [Aardwolf Social Interface](https://github.com/Aardwolf-Social/aardwolf-interface), a repo to independently work on, and test Frontend development.
+- [Aardwolf Social Website](https://github.com/Aardwolf-Social/aardwolf-website), is where the Jekyll site is deployed from.
 
 ### Contact
 If you have ANY questions please feel free to reach out to us!
@@ -73,5 +73,5 @@ If you have ANY questions please feel free to reach out to us!
 * Mastodon: [@banjofox2@hackers.town](https://hackers.town/@banjofox2).
 
 ### License
-All Aardwolf software is licensed under the GNU Affero General Public License 
+All Aardwolf Social software is licensed under the GNU Affero General Public License 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
