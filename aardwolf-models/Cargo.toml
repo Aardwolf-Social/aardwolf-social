@@ -21,6 +21,7 @@ strum_macros = "0.26.4"
 thiserror = "1.0"
 url = "2.5"
 dotenvy ="0.15"
+env_logger = "^0.11.5"
 
 [dependencies.uuid]
 version = "1.10"
@@ -35,5 +36,5 @@ version = "2.2"
 features = ["chrono", "postgres", "serde_json", "uuid"]
 
 [dev-dependencies]
-env_logger = "0.11.5"
+env_logger = "^0.11.5"
 serde_derive = "1.0"

@@ -7,8 +7,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-yew = { version = "0.21.0", features = ["csr"]}
-yew-router = "0.18.0"
+yew = { version = "^0.21.0", features = ["csr"]}
+yew-router = "^0.18.0"
 wasm-bindgen = "0.2.93" # Easy support for interacting between JS and Rust.
 log = {version = "0.4.22", features = ["std", "serde"]} # Also used by main app for logging
 wasm-logger = "0.2.0" # Using this instead of Gloo because we already use log
