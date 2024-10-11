@@ -9,6 +9,7 @@ on:
     branches:
      - 'main'
      - 'banjofox/*'
+  workflow_dispatch: # added for testing 
 
 jobs:
 
