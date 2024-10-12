@@ -39,7 +39,7 @@ COPY --chown=aardwolf:aardwolf ./config/example.toml /app/aardwolf.toml
 #RUN cargo build --bin setup 
 
 # Copy the entrypoint and make it executable.
-COPY --chown=aardwolf:aardwolf docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY --chown=aardwolf:aardwolf ./docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod  u=rx,g=rx,o=rx /usr/local/bin/docker-entrypoint.sh
 
 # Expose the default port. This is often overridden in Docker CLI or Kubernetes.
