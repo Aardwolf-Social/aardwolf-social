@@ -7,7 +7,7 @@ build = "build.rs"
 
 [build-dependencies]
 config = "0.14.0"
-ructe = "0.13"
+ructe = "^0.13.4" # Careted to require exactly 0.13 because newer versions break the build.
 
 [dependencies]
 gettext = "0.4"
@@ -36,3 +36,9 @@ path = "../aardwolf-yew-frontend"
 # Adding rust-i18n for handling localization
 [dependencies]
 rust-i18n = "3"
+
+#- 
+# Adding syn for template compilation
+[dependencies.syn]
+version = "2.0.77"
+features = ["full", "extra-traits"]

@@ -1,3 +1,8 @@
+##
+# THIS IS THE RUCTE TEMPLATE STRUCTURE
+# TODO - Document the Yew Templates
+##
+
 ```
 aardwolf-templates/
 ├── compiled_templates                      -- This is where the rust-compiled templates end up

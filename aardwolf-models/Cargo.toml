@@ -7,8 +7,8 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0"
-bcrypt = "0.15.0"
-chrono = "0.4.26"
+bcrypt = "0.15.1"
+chrono = "0.4.38"
 chrono-tz = "0.9.0"
 log = "0.4"
 mime = "0.3"
@@ -19,11 +19,12 @@ serde_json = "1.0"
 strum = "0.26.3"
 strum_macros = "0.26.4"
 thiserror = "1.0"
-url = "2.1"
+url = "2.5"
 dotenvy ="0.15"
+env_logger = "^0.11.5"
 
 [dependencies.uuid]
-version = "1.3"
+version = "1.10"
 features = ["v4"]
 
 [features]
@@ -31,9 +32,9 @@ default = []
 test = []
 
 [dependencies.diesel]
-version = "2.1"
+version = "2.2"
 features = ["chrono", "postgres", "serde_json", "uuid"]
 
 [dev-dependencies]
-env_logger = "0.11.3"
+env_logger = "^0.11.5"
 serde_derive = "1.0"
