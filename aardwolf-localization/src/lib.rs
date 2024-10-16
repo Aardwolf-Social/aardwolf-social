@@ -38,4 +38,3 @@ i18n!("locales",
 i18n!();
 
 // End rust-i18n configuration
-//
