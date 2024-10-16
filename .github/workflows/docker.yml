@@ -10,8 +10,9 @@ on:
     - opened
     - reopened
     branches:
-      - '*'
-
+      - main
+      - 'banjofox/*'
+      
 jobs:
 
   build:
