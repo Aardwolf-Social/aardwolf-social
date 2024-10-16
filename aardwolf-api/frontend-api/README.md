@@ -1,6 +1,7 @@
 # Placeholder for frontend API code
 
-Frontend API Endpoints for a Social Media App:
+Some endpoint suggestions:
+```
 GET /api/posts: Retrieve a list of posts to display on the feed.
 POST /api/posts/create: Create a new post.
 PUT /api/posts/update/:postId: Update a post.
@@ -11,3 +12,4 @@ GET /api/users/:userId/posts: Retrieve posts by a specific user.
 GET /api/users/:userId/followers: Retrieve followers of a user.
 POST /api/users/follow/:userId: Follow a user.
 POST /api/users/unfollow/:userId: Unfollow a user.
+```
