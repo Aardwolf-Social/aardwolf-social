@@ -14,6 +14,7 @@ on:
     branches:
      - main
      - 'banjofox/*'
+     
   schedule:
     - cron: '41 3 * * 4'
 
