@@ -1,7 +1,3 @@
-Here's an improved and beautified version of the README for the **Aardwolf Social** project. This version focuses on enhancing readability, making it more visually appealing, and presenting the project in a welcoming way for both new users and experienced contributors.
-
----
-
 # 🐺 Aardwolf Social
 **Powering connected social communities with open-source software**
 
