@@ -1,3 +1,10 @@
+Here's an improved and beautified version of the README for the **Aardwolf Social** project. This version focuses on enhancing readability, making it more visually appealing, and presenting the project in a welcoming way for both new users and experienced contributors.
+
+---
+
+# 🐺 Aardwolf Social
+**Powering connected social communities with open-source software**
+
 [![Aardwolf-Social/build](https://github.com/Aardwolf-Social/aardwolf/actions/workflows/aardwolf-build.yml/badge.svg)](https://github.com/Aardwolf-Social/aardwolf/actions/workflows/aardwolf-build.yml)
 [![Aardwolf-Social/test](https://github.com/Aardwolf-Social/aardwolf/actions/workflows/aardwolf-test.yml/badge.svg)](https://github.com/Aardwolf-Social/aardwolf/actions/workflows/aardwolf-test.yml)
 ![GitHub issues](https://img.shields.io/github/issues/Aardwolf-Social/aardwolf)
@@ -5,73 +12,100 @@
 [![Docker Image CI](https://github.com/Aardwolf-Social/aardwolf/actions/workflows/docker.yml/badge.svg)](https://github.com/Aardwolf-Social/aardwolf/actions/workflows/docker.yml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
-# Aardwolf Social
+---
 
 <p align="center">
   <img alt="Aardwolf Social: Powering connected social communities with open software" src="/doc/images/aardwolf-banner_solid-bg.png" />
 </p>
 
-### About
-Unlike mainstream social media sites that funnel the world into a single (advertising-filled) shared experience, we recognize that individuals with different identities and interests.  Aardwolf is a free, and open-source alternative to Facebook which respects user privacy.  Aardwolf Social servers (also called instances) are able to be customized to fit your community's needs, while still being able to communicate to one another.
+## 🌐 About Aardwolf Social
 
-### Project Tour
-* .github/ -- CI/CD Files related to GitHub
-* aardwolf-actix/ -- The Actix backend rust application code
-* aardwolf-models/ -- Web app models, and database setup files
-* aardwolf-templates/ -- Legacy Frontend files
-* aardwolf-test-helpers/ -- Development functional test code
-* aardwolf-types/ -- Additional web app components
-* aardwolf-yew-frontend/ -- The Yew frontend application code
-* config/ -- Aardwolf Social app configuration files
-* doc/ -- Documentation
-* docker/ -- Docker files
-* po/ -- Legacy directory for i18n translations
-* src/ -- The source directory for the main app (pulls in other parts)
-* tests/ -- Where the code validation, and coverage tests should live
-* build.rs -- Rust code that directs Cargo build
-* Cargo.lock -- A complete manifest of all rust crates used, including dependencies
-* Cargo.toml -- A manifest of crates required to build Aardwolf
-* CODE_OF_CONDUCT.md -- Our Code of Conduct rules
-* db-init.sh -- This should be part of the setup/install scripts
-* diesel.toml -- Tells diesel where to find the SQL migrations
-* LICENSE -- The license we use for this software
-* README.md -- The file you are presently reading
-* ROADMAP.md -- Our development roadmap
-* rust-toolchain.toml -- This tells the development environment which version of rust to use
-* SECURITY.md -- Future info for security updates
-* translations -> aardwolf-templates/translations
+**Aardwolf Social** is a free and open-source alternative to Facebook that prioritizes user privacy and decentralization. Unlike mainstream platforms that present a single advertising-driven experience, Aardwolf empowers individuals and communities to create unique, customizable spaces while maintaining the ability to interact across different instances.
 
-## Homepage Screenshot
-This is a screenshot of the static HTML demo. While not a final version, it does showcase the design intentions.
+- **User Privacy First**: No ads, no tracking—just a community-first social experience.
+- **Decentralized & Customizable**: Each community can have its own Aardwolf server (instance) that fits its specific needs.
+- **Open Source**: Built by the community for the community.
+
+---
+
+## 📂 Project Structure
+
+| Folder/File                  | Description                                       |
+|------------------------------|---------------------------------------------------|
+| `.github/`                    | CI/CD configurations for GitHub actions           |
+| `aardwolf-actix/`             | Backend code (Rust, Actix framework)              |
+| `aardwolf-models/`            | App models and database setup files               |
+| `aardwolf-templates/`         | Legacy frontend files                            |
+| `aardwolf-yew-frontend/`      | Yew-based frontend application code               |
+| `config/`                     | Configuration files                              |
+| `doc/`                        | Documentation                                    |
+| `docker/`                     | Docker files                                     |
+| `src/`                        | Main app source code                             |
+| `tests/`                      | Unit tests and code coverage                     |
+| `Cargo.toml`                  | Rust crate manifest                              |
+| `Cargo.lock`                  | Dependency lock file                             |
+| `LICENSE`                     | License file (AGPL v3)                           |
+| `README.md`                   | You're reading it!                               |
+| `ROADMAP.md`                  | Development roadmap                              |
+| `CODE_OF_CONDUCT.md`          | Code of conduct for community contributors       |
+| `SECURITY.md`                 | Security policy and updates                      |
+
+---
+
+## 🌍 Screenshot of Aardwolf Social
+
+Check out a preview of the homepage design below! This static demo showcases our design approach and upcoming features.
 
 <p align="center">
   <img alt="Aardwolf Social: Powering connected social communities with open software" src="/doc/images/homepage-demo.png" />
 </p>
 
-###  Code of Conduct
-As a community it is very important to us that we maintain a positive and supportive environment for everyone who wants to participate. When you join us we ask that you follow our [code of conduct](/CODE_OF_CONDUCT.md) in all interactions both on and offline.
+---
 
-###  Contributing
-Here are the areas we could use help with!
+## 📜 License
+All Aardwolf Social software is licensed under the [GNU Affero General Public License (AGPL v3)](http://www.gnu.org/licenses/agpl-3.0).
 
-* Rust Developers, folk that want to learn are welcome! - [Rust](https://www.rust-lang.org)
-* Frontend Developers, HTML/CSS folks that want to help with the UI/UX part of the project
-* Documentation help: Proofreading, organization, update wiki, etc.
-* Docker containers/VM's: Some progress has been made building Docker images (for development)
+---
 
-Once you're ready to dive in please check out our [contributor's guidelines](/CONTRIBUTING.md), and our [roadmap](ROADMAP.md).  
+## 🤝 Contributing to Aardwolf Social
 
-#### List of Repositories
-Currently, Aardwolf-Social is broken down into several repositories:
-- Aardwolf-Social "Main", the one you are presently on.
-- [Aardwolf Social Interface](https://github.com/Aardwolf-Social/aardwolf-interface), a repo to independently work on, and test Frontend development.
-- [Aardwolf Social Website](https://github.com/Aardwolf-Social/aardwolf-website), is where the Jekyll site is deployed from.
+We would love your help! Whether you’re an experienced developer or just starting, there’s a place for you in the Aardwolf community. Here are some ways to contribute:
 
-### Contact
-If you have ANY questions please feel free to reach out to us!
-* Chat Room: Follow the link to choose your connection method :) [#aardwolf-discussion:matrix.org](https://matrix.to/#/#aardwolf-discussion:matrix.org)
-* Mastodon: [@banjofox2@hackers.town](https://hackers.town/@banjofox2).
+- **Rust Developers**: If you're proficient in or learning Rust, we need your expertise to improve our backend.
+- **Frontend Developers**: Help us design a beautiful and functional user interface using HTML, CSS, and Yew.
+- **Documentation**: Proofread, organize, and update our documentation.
+- **Docker & VMs**: Assist in building Docker images for development environments.
 
-### License
-All Aardwolf Social software is licensed under the GNU Affero General Public License 
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
+For more details, check out our [contributor guidelines](/CONTRIBUTING.md) and [development roadmap](/ROADMAP.md).
+
+---
+
+## 📬 Contact Us
+
+Have questions or want to join the conversation? We’re available on several platforms:
+
+- **Matrix Chat Room**: [#aardwolf-discussion:matrix.org](https://matrix.to/#/#aardwolf-discussion:matrix.org)
+- **Mastodon**: [@banjofox2@hackers.town](https://hackers.town/@banjofox2)
+
+---
+
+## 🌟 Community Code of Conduct
+Aardwolf Social is dedicated to fostering a welcoming and supportive community. We expect all contributors to follow our [Code of Conduct](/CODE_OF_CONDUCT.md) both online and offline. Let's build something amazing together!
+
+---
+
+## 📂 Repositories
+
+Aardwolf Social is divided into several repositories:
+
+- **[Aardwolf-Social Main](https://github.com/Aardwolf-Social/aardwolf)**: The main project repository.
+- **[Aardwolf Social Interface](https://github.com/Aardwolf-Social/aardwolf-interface)**: The frontend development repository.
+- **[Aardwolf Social Website](https://github.com/Aardwolf-Social/aardwolf-website)**: Repository for the Jekyll-powered website.
+
+---
+
+**Join Us in Building a More Open and Connected World with Aardwolf Social!**
+
+---
+
+This version organizes the content into clearly marked sections with headings, visual enhancements, and icons where appropriate. It uses consistent formatting and places key project details in an accessible and visually appealing format.
