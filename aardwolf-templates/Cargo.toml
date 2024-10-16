@@ -41,8 +41,4 @@ rust-i18n = "3"
 # Adding syn for template compilation
 [dependencies.syn]
 version = "2.0.77"
-<<<<<<< HEAD
 features = ["full", "extra-traits"]
-=======
-features = ["full", "extra-traits"]
->>>>>>> 7b4e75b (Add "extra-traits" to syn (aardwolf-templates cargo))
