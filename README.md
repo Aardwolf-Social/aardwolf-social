@@ -37,32 +37,32 @@ Unlike mainstream social media sites that funnel the world into a single (advert
 * LICENSE -- The license we use for this software
 * README.md -- The file you are presently reading
 * ROADMAP.md -- Our development roadmap
-* rust-toolchain.toml -- This tells the development environment which version of rust to use.
+* rust-toolchain.toml -- This tells the development environment which version of rust to use
 * SECURITY.md -- Future info for security updates
 * translations -> aardwolf-templates/translations
 
 ## Homepage Screenshot
-This is a screenshot of the static HTML demo.  While not a final version it does showcase the design intentions.
+This is a screenshot of the static HTML demo. While not a final version, it does showcase the design intentions.
 
 <p align="center">
   <img alt="Aardwolf Social: Powering connected social communities with open software" src="/doc/images/homepage-demo.png" />
 </p>
 
 ###  Code of Conduct
-As a COMMUNITY it is very important to us that we maintain a positive and supportive environment for everyone who wants to participate. When you join us we ask that you follow our [code of conduct](/CODE_OF_CONDUCT.md) in all interactions both on and offline.
+As a community it is very important to us that we maintain a positive and supportive environment for everyone who wants to participate. When you join us we ask that you follow our [code of conduct](/CODE_OF_CONDUCT.md) in all interactions both on and offline.
 
 ###  Contributing
 Here are the areas we could use help with!
 
-* Rust Developers, folk that want to learn are welcome! - [Rust](https://www.rust-lang.org) 
-* Frontend Developers, HTML/CSS folks that want to help with the UI/UX part of the project.
-* Documentation help.  Proofreading, organization, update wiki, etc.
-* Docker containers/VM's.  Some progress has been made building Docker images (for developement)
+* Rust Developers, folk that want to learn are welcome! - [Rust](https://www.rust-lang.org)
+* Frontend Developers, HTML/CSS folks that want to help with the UI/UX part of the project
+* Documentation help: Proofreading, organization, update wiki, etc.
+* Docker containers/VM's: Some progress has been made building Docker images (for development)
 
-Once your ready to dive in please check out our [contributor's guidelines](/CONTRIBUTING.md), and our [roadmap](ROADMAP.md).  
+Once you're ready to dive in please check out our [contributor's guidelines](/CONTRIBUTING.md), and our [roadmap](ROADMAP.md).  
 
 #### List of Repositories
-Currently Aardwolf-Social is broken down into several repositories 
+Currently, Aardwolf-Social is broken down into several repositories:
 - Aardwolf-Social "Main", the one you are presently on.
 - [Aardwolf Social Interface](https://github.com/Aardwolf-Social/aardwolf-interface), a repo to independently work on, and test Frontend development.
 - [Aardwolf Social Website](https://github.com/Aardwolf-Social/aardwolf-website), is where the Jekyll site is deployed from.
