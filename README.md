@@ -28,23 +28,31 @@
 
 | Folder/File                  | Description                                       |
 |------------------------------|---------------------------------------------------|
-| `.github/`                    | CI/CD configurations for GitHub actions           |
-| `aardwolf-actix/`             | Backend code (Rust, Actix framework)              |
-| `aardwolf-models/`            | App models and database setup files               |
-| `aardwolf-templates/`         | Legacy frontend files                            |
-| `aardwolf-yew-frontend/`      | Yew-based frontend application code               |
-| `config/`                     | Configuration files                              |
-| `doc/`                        | Documentation                                    |
-| `docker/`                     | Docker files                                     |
-| `src/`                        | Main app source code                             |
-| `tests/`                      | Unit tests and code coverage                     |
-| `Cargo.toml`                  | Rust crate manifest                              |
-| `Cargo.lock`                  | Dependency lock file                             |
-| `LICENSE`                     | License file (AGPL v3)                           |
-| `README.md`                   | You're reading it!                               |
-| `ROADMAP.md`                  | Development roadmap                              |
-| `CODE_OF_CONDUCT.md`          | Code of conduct for community contributors       |
-| `SECURITY.md`                 | Security policy and updates                      |
+| `.github/`                    | CI/CD Files related to GitHub                     |
+| `aardwolf-actix/`             | The Actix backend Rust application code           |
+| `aardwolf-models/`            | Web app models and database setup files           |
+| `aardwolf-templates/`         | Legacy frontend files                             |
+| `aardwolf-test-helpers/`      | Development functional test code                  |
+| `aardwolf-types/`             | Additional web app components                     |
+| `aardwolf-yew-frontend/`      | The Yew frontend application code                 |
+| `config/`                     | Aardwolf Social app configuration files           |
+| `doc/`                        | Documentation                                     |
+| `docker/`                     | Docker files                                      |
+| `po/`                         | Legacy directory for i18n translations            |
+| `src/`                        | The source directory for the main app             |
+| `tests/`                      | Code validation and coverage tests                |
+| `build.rs`                    | Rust code that directs Cargo build                |
+| `Cargo.lock`                  | Complete manifest of all Rust crates used         |
+| `Cargo.toml`                  | Manifest of crates required to build Aardwolf     |
+| `CODE_OF_CONDUCT.md`          | Our Code of Conduct rules                         |
+| `db-init.sh`                  | Part of the setup/install scripts                 |
+| `diesel.toml`                 | Tells Diesel where to find the SQL migrations     |
+| `LICENSE`                     | The license we use for this software              |
+| `README.md`                   | The file you are presently reading                |
+| `ROADMAP.md`                  | Our development roadmap                           |
+| `rust-toolchain.toml`         | Specifies the Rust version for the dev environment|
+| `SECURITY.md`                 | Future info for security updates                  |
+| `translations/`               | Translations directory (links to `aardwolf-templates`) |
 
 ---
 
@@ -58,11 +66,6 @@ Check out a preview of the homepage design below! This static demo showcases our
 
 ---
 
-## 📜 License
-All Aardwolf Social software is licensed under the [GNU Affero General Public License (AGPL v3)](http://www.gnu.org/licenses/agpl-3.0).
-
----
-
 ## 🤝 Contributing to Aardwolf Social
 
 We would love your help! Whether you’re an experienced developer or just starting, there’s a place for you in the Aardwolf community. Here are some ways to contribute:
@@ -72,7 +75,62 @@ We would love your help! Whether you’re an experienced developer or just start
 - **Documentation**: Proofread, organize, and update our documentation.
 - **Docker & VMs**: Assist in building Docker images for development environments.
 
-For more details, check out our [contributor guidelines](/CONTRIBUTING.md) and [development roadmap](/ROADMAP.md).
+### How to Contribute
+
+Follow these steps to start contributing to Aardwolf Social:
+
+1. **Fork the Repository**:
+   - Navigate to the main repository [Aardwolf Social GitHub Repo](https://github.com/Aardwolf-Social/aardwolf).
+   - Click the **Fork** button in the upper right corner to create a copy of the repository under your GitHub account.
+
+2. **Clone the Repository**:
+   - Open your terminal and clone the forked repository to your local machine:
+     ```bash
+     git clone https://github.com/YOUR-USERNAME/aardwolf.git
+     cd aardwolf
+     ```
+
+3. **Create a New Branch**:
+   - Before making any changes, create a new branch for your feature or fix. This keeps your contributions organized and separate from the main codebase:
+     ```bash
+     git checkout -b feature-name
+     ```
+
+4. **Make Your Changes**:
+   - Add your contributions, whether it’s code, documentation, or other improvements. Once you're happy with your changes, stage and commit them:
+     ```bash
+     git add .
+     git commit -m "Description of your changes"
+     ```
+
+5. **Push the Changes to Your Fork**:
+   - Push the changes from your local machine to your forked repository:
+     ```bash
+     git push origin feature-name
+     ```
+
+6. **Create a Pull Request (PR)**:
+   - Go to your forked repository on GitHub, and you should see a prompt to **Compare & pull request**.
+   - Click that, and make sure you're merging into the **main** branch of the original `Aardwolf-Social/aardwolf` repository.
+   - Provide a clear title and description for your pull request so that maintainers can easily understand your changes.
+
+7. **Wait for Feedback**:
+   - A project maintainer will review your PR. They may ask for changes or approve it. Feel free to discuss or clarify anything in the PR comments.
+
+### Additional Contribution Resources
+
+- Check out our [contributor guidelines](/CONTRIBUTING.md) for detailed rules and tips.
+- View our [development roadmap](/ROADMAP.md) to see current priorities and future plans.
+
+---
+
+## 📂 Repositories
+
+Aardwolf Social is divided into several repositories:
+
+- **[Aardwolf-Social Main](https://github.com/Aardwolf-Social/aardwolf)**: The main project repository.
+- **[Aardwolf Social Interface](https://github.com/Aardwolf-Social/aardwolf-interface)**: The frontend development repository.
+- **[Aardwolf Social Website](https://github.com/Aardwolf-Social/aardwolf-website)**: Repository for the Jekyll-powered website.
 
 ---
 
@@ -90,18 +148,9 @@ Aardwolf Social is dedicated to fostering a welcoming and supportive community. 
 
 ---
 
-## 📂 Repositories
-
-Aardwolf Social is divided into several repositories:
-
-- **[Aardwolf-Social Main](https://github.com/Aardwolf-Social/aardwolf)**: The main project repository.
-- **[Aardwolf Social Interface](https://github.com/Aardwolf-Social/aardwolf-interface)**: The frontend development repository.
-- **[Aardwolf Social Website](https://github.com/Aardwolf-Social/aardwolf-website)**: Repository for the Jekyll-powered website.
+## 📜 License
+All Aardwolf Social software is licensed under the [GNU Affero General Public License (AGPL v3)](http://www.gnu.org/licenses/agpl-3.0).
 
 ---
 
 **Join Us in Building a More Open and Connected World with Aardwolf Social!**
-
----
-
-This version organizes the content into clearly marked sections with headings, visual enhancements, and icons where appropriate. It uses consistent formatting and places key project details in an accessible and visually appealing format.
