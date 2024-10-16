@@ -5,8 +5,9 @@ use aardwolf_types::forms::auth::{
 use gettext::Catalog;
 use gettext_macros::i18n;
 
-use crate::{Alert, AlertKind, InputEmail, InputPassword, Renderable};
-
+use crate::Renderable;
+use crate::elements::alert::{Alert, AlertKind};
+use crate::elements::input::{InputEmail, InputPassword};
 
 pub struct SignUp<'a> {
     pub(crate) catalog: &'a Catalog,
@@ -86,6 +87,6 @@ impl<'a> SignUp<'a> {
 
 impl<'a> Renderable for SignUp<'a> {
     fn render(&self, write: &mut dyn std::io::Write) -> std::io::Result<()> {
-        crate::templates::sign_up(write, self)
+        crate::templates::sign_up_html(write, self)
     }
 }

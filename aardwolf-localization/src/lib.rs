@@ -1,4 +1,4 @@
-///-
+//
 // Start of rust-i18n configuration
 // Load I18n macro, for allow you use `t!` macro in anywhere.
 #[macro_use]
@@ -38,4 +38,3 @@ i18n!("locales",
 i18n!();
 
 // End rust-i18n configuration
-///S

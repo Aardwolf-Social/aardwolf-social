@@ -10,14 +10,14 @@ with-actix = ["actix-web", "futures", "r2d2"]
 
 [dependencies]
 anyhow = "1.0"
-derive_builder = "0.20.0"
+derive_builder = "0.20.1"
 log = "0.4"
 openssl = "0.10"
 mime = "0.3"
 serde = "1.0"
 serde_derive = "1.0"
 thiserror = "1.0"
-url = "2.1"
+url = "2.5"
 url_serde = "0.2"
 
 [dependencies.aardwolf-models]
@@ -25,11 +25,11 @@ version = "0.1"
 path = "../aardwolf-models"
 
 [dependencies.actix-web]
-version = "4.3"
+version = "4.9"
 optional = true
 
 [dependencies.diesel]
-version = "2.1"
+version = "2.2"
 default-features = false
 features = ["postgres", "uuid", "chrono", "r2d2"]
 
@@ -44,3 +44,7 @@ features = ["compat"]
 
 [dev-dependencies]
 aardwolf-test-helpers = { version = "0.1", path = "../aardwolf-test-helpers" }
+
+# Build script
+[build]
+script = "build.rs"

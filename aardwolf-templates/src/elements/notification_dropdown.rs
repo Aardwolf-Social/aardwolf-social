@@ -1,5 +1,9 @@
 use gettext::Catalog;
 
+/// A dropdown menu for displaying notifications.
+#[derive(Debug)]
 pub struct NotificationDropdown<'a> {
-    pub(crate) catalog: &'a Catalog,
+    /// The gettext catalog for translating strings.
+    catalog: &'a Catalog,
 }
+

@@ -74,10 +74,14 @@ pub enum ValidateDisplayNameFail {
 }
 
 #[derive(Clone, Debug, Serialize)]
-pub enum ValidateFollowPolicyFail {}
+pub enum ValidateFollowPolicyFail {
+    Invalid,
+}    
 
 #[derive(Clone, Debug, Serialize)]
-pub enum ValidateDefaultVisibilityFail {}
+pub enum ValidateDefaultVisibilityFail {
+    Invalid,
+}
 
 #[derive(Clone, Debug, Serialize)]
 pub enum ValidateShortnameFail {
@@ -87,7 +91,10 @@ pub enum ValidateShortnameFail {
 }
 
 #[derive(Clone, Debug, Serialize)]
-pub enum ValidateIsSearchableFail {}
+pub enum ValidateIsSearchableFail {
+    Invalid,
+    SomeError,
+}
 
 pub struct ValidatePersonaCreationForm(pub PersonaCreationForm);
 

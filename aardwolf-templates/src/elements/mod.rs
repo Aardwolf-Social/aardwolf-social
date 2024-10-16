@@ -1,19 +1,13 @@
-mod alert;
-mod input;
-mod input_select;
-mod input_textarea;
-mod lang_dropdown;
-mod notification_content;
-mod notification_dropdown;
-mod search_bar;
+pub mod alert;
+pub mod input;
+pub mod input_select;
+pub mod input_text;
+pub mod input_textarea;
+pub mod lang_dropdown;
+pub mod notification_content;
+pub mod notification_dropdown;
+pub mod search_bar;
 
-pub use self::{
-    alert::{Alert, AlertKind},
-    input::{Input, InputCheckbox, InputEmail, InputPassword, InputPasswordConfirm, InputText},
-    input_select::{InputSelect, SelectOption},
-    input_textarea::InputTextarea,
-    lang_dropdown::*,
-    notification_content::*,
-    notification_dropdown::*,
-    search_bar::*,
-};
+pub use notification_dropdown::NotificationDropdown;
+pub use lang_dropdown::LangDropdown;
+

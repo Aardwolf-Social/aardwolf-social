@@ -1,13 +1,13 @@
-@use gettext::Catalog;
-@use crate::templates::{footer, html_head};
+@use super::{footer, html_head};
 
-@(catalog: &Catalog, title: &str, content: Content)
+@(catalog: &Catalog, title: &str, page_content: Content)
 
 <!DOCTYPE html>
 <html lang="en">
-    @:html_head(title)
+    @:html_head(&catalog, title)
     <body>
-        @:content()
+        @:page_content()
+        @:footer(&catalog)
     </body>
-    @:footer(catalog)
 </html>
+

@@ -9,105 +9,69 @@ use crate::{error::AardwolfFail, traits::Validate};
 pub struct PostCreationForm {
     csrf_token: String,
     visibility: PostVisibility,
-    #[serde(default)]
     name: Option<String>,
     source: String,
 }
 
 impl PostCreationForm {
-    pub fn as_state(&self) -> PostCreationFormState {
+    pub fn into_state(self) -> PostCreationFormState {
         PostCreationFormState {
             visibility: self.visibility,
-            name: self.name.clone(),
-            source: self.source.clone(),
+            name: self.name,
+            source: self.source,
+            username: String::new(),
         }
     }
 }
 
+#[derive(Clone, Debug, Default)]
 pub struct PostCreationFormState {
     pub visibility: PostVisibility,
     pub name: Option<String>,
     pub source: String,
+    pub username: String,
 }
 
 #[derive(Clone, Debug, Error, Serialize)]
-#[error("Error validating post creation form")]
-pub struct ValidatePostCreationFail {
-    pub visibility: Option<ValidateVisibilityError>,
-    pub source: Option<ValidateSourceError>,
-    pub name: Option<ValidateNameError>,
-}
-
-#[derive(Clone, Debug, Serialize)]
-pub enum ValidateVisibilityError {}
-
-#[derive(Clone, Debug, Serialize, Error)]
-pub enum ValidateSourceError {
+pub enum ValidatePostCreationError {
+    #[error("Invalid visibility")]
+    InvalidVisibility,
     #[error("Source must not be empty")]
-    Empty,
+    EmptySource,
+    #[error("Name must not be empty")]
+    EmptyName,
 }
 
-#[derive(Clone, Debug, Serialize)]
-pub enum ValidateNameError {}
+impl AardwolfFail for ValidatePostCreationError {}
 
-impl ValidatePostCreationFail {
-    pub fn is_empty(&self) -> bool {
-        self.visibility.is_none() && self.source.is_none() && self.name.is_none()
-    }
-}
-
-impl AardwolfFail for ValidatePostCreationFail {}
-
-pub struct ValidatePostCreationForm(pub PostCreationForm);
+pub struct ValidatePostCreationForm(PostCreationForm);
 
 impl Validate for ValidatePostCreationForm {
     type Item = ValidatedPostCreationForm;
-    type Error = ValidatePostCreationFail;
+    type Error = ValidatePostCreationError;
 
-    fn validate(self) -> Result<Self::Item, Self::Error> {
-        let mut err = ValidatePostCreationFail {
-            visibility: None,
-            source: None,
-            name: None,
-        };
-
-        let source = self.0.source.trim().to_owned();
-        let content = source.clone(); // TODO: translate things here
-        let visibility = self.0.visibility;
-        let media_type = TEXT_HTML.into();
-
-        let name = if let Some(name) = self.0.name {
-            if name.trim().is_empty() {
-                None
-            } else {
-                Some(name)
-            }
-        } else {
-            None
-        };
-
-        if source.is_empty() {
-            err.source = Some(ValidateSourceError::Empty);
+    fn validate(&self) -> Result<Self::Item, Self::Error> {
+        if self.0.source.is_empty() {
+            return Err(ValidatePostCreationError::EmptySource);
         }
 
-        if !err.is_empty() {
-            return Err(err);
-        }
+        let name = self.0.name.as_deref().map(|n| n.trim().to_string()).filter(|n| !n.is_empty());
 
         Ok(ValidatedPostCreationForm {
-            media_type,
-            visibility,
-            content,
-            source,
+            media_type: TEXT_HTML,
+            visibility: self.0.visibility,
+            content: self.0.source.clone(),
+            source: self.0.source.clone(),
             name,
         })
     }
 }
 
+#[derive(Clone, Debug)]
 pub struct ValidatedPostCreationForm {
-    pub(crate) media_type: Mime,
-    pub(crate) visibility: PostVisibility,
-    pub(crate) content: String,
-    pub(crate) source: String,
-    pub(crate) name: Option<String>,
+    pub media_type: Mime,
+    pub visibility: PostVisibility,
+    pub content: String,
+    pub source: String,
+    pub name: Option<String>,
 }

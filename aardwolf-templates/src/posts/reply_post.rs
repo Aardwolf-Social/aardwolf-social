@@ -1,13 +1,14 @@
 use gettext::Catalog;
 
-use crate::elements::{Alert, InputSelect, InputText, InputTextarea};
+use crate::elements::{alert::Alert, input_select::InputSelect, input_text::InputText, input_textarea::InputTextarea};
 
+#[derive(Debug)]
 pub struct ReplyPost<'a> {
-    pub(crate) catalog: &'a Catalog,
-    pub(crate) csrf: &'a str,
-    pub(crate) alert: Option<Alert>,
-    pub(crate) username: &'a str,
-    pub(crate) source: InputTextarea<'a>,
-    pub(crate) visibility: InputSelect<'a>,
-    pub(crate) name: InputText<'a>,
+    pub catalog: &'a Catalog,
+    pub csrf_token: &'a str,
+    pub alert: Option<Alert>,
+    pub author: &'a str,
+    pub source: InputTextarea<'a>,
+    pub visibility: InputSelect<'a>,
+    pub title: InputText<'a>,
 }

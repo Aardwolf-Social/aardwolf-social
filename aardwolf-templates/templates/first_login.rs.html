@@ -5,28 +5,30 @@
 @(first_login: &FirstLogin)
 
 @:base(first_login.catalog, "Aardwolf | Get Posting", {
-<header>
+  <header>
     <h2 class="title">@i18n!(first_login.catalog, "Get posting!")</h2>
     <div style="text-align: right">
-        @i18n!(first_login.catalog, "Fill out your profile information")
+      @i18n!(first_login.catalog, "Fill out your profile information")
     </div>
-</header>
-<section>
+  </header>
+
+  <section>
     <div class="container">
-        <div class="columns is-mobile">
-            <form method="POST" action="/personas/create">
-                @if let Some(ref a) = first_login.alert {
-                    @:alert(a)
-                }
-                <input type="hidden" name="csrf_token" value="@first_login.csrf">
-                @:input_text(&first_login.display_name)
-                @:input_text(&first_login.shortname)
-                @:input_select(&first_login.follow_policy)
-                @:input_select(&first_login.default_visibility)
-                @:input_checkbox(&first_login.is_searchable)
-                <button>@i18n!(&first_login.catalog, "Create Persona")</button>
-            </form>
-        </div>
+      <div class="columns is-mobile">
+        <form method="POST" action="/personas/create">
+          @if let Some(ref err) = first_login.alert {
+            @:alert(err)
+          }
+
+          <input type="hidden" name="csrf_token" value="@first_login.csrf">
+          @:input_text(&first_login.display_name)
+          @:input_text(&first_login.shortname)
+          @:input_select(&first_login.follow_policy)
+          @:input_select(&first_login.default_visibility)
+          @:input_checkbox(&first_login.is_searchable)
+          <button>@i18n!(&first_login.catalog, "Create Persona")</button>
+        </form>
+      </div>
     </div>
-</section>
+  </section>
 });

@@ -3,8 +3,8 @@
 .github/
 
 # Ignore envrionment/OS files
-**/.DS_Store/
-**/.vscode/
+.DS_Store/
+.vscode/
 
 # This is used for Docker
 .env

@@ -1,12 +1,25 @@
-@use crate::{Alert, templates::elements::icon};
+@use crate::{Alert, AlertKind, templates::elements::icon};
 
 @(alert: &Alert)
 
-<div class="aardwolf-alert aardwolf-alert-@alert.kind">
+<div class="aardwolf-alert aardwolf-alert-@match alert.kind {
+    AlertKind::Info => "info",
+    AlertKind::Warning => "warning",
+    AlertKind::Error => "error",
+    AlertKind::Success => "success",
+}">
+
     <div class="aardwolf-alert-meta">
-        @:icon("warning")
+        @:icon(match alert.kind {
+            AlertKind::Info => "info-circle",
+            AlertKind::Warning => "exclamation-triangle",
+            AlertKind::Error => "exclamation-circle",
+            AlertKind::Success => "check-circle",
+        })
     </div>
+
     <div class="aardwolf-alert-message">
         @alert.message
     </div>
 </div>
+
