@@ -6,16 +6,16 @@ name: 'Docker Image CI'
 
 on:
   pull_request:
+    types: 
+    - opened
+    - reopened
     branches:
-     - 'main'
-     - 'banjofox/*'
+      - '*'
 
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
