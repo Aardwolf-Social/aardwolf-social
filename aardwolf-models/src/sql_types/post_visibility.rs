@@ -32,6 +32,13 @@ pub enum PostVisibility {
     ListedPeopleOnly,
 }
 
+// Implement the Default trait for PostVisibility, and set it to Public
+impl Default for PostVisibility {
+    fn default() -> Self {
+        PostVisibility::Public // Choose an appropriate default variant
+    }
+}
+
 impl Serialize for PostVisibility {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
