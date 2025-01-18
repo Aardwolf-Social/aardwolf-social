@@ -50,7 +50,7 @@ impl Validate for ValidatePostCreationForm {
     type Item = ValidatedPostCreationForm;
     type Error = ValidatePostCreationError;
 
-    fn validate(&self) -> Result<Self::Item, Self::Error> {
+    fn validate(self) -> Result<Self::Item, Self::Error> {
         if self.0.source.is_empty() {
             return Err(ValidatePostCreationError::EmptySource);
         }
@@ -58,7 +58,7 @@ impl Validate for ValidatePostCreationForm {
         let name = self.0.name.as_deref().map(|n| n.trim().to_string()).filter(|n| !n.is_empty());
 
         Ok(ValidatedPostCreationForm {
-            media_type: TEXT_HTML,
+            media_type: aardwolf_models::sql_types::Mime(TEXT_HTML),
             visibility: self.0.visibility,
             content: self.0.source.clone(),
             source: self.0.source.clone(),
