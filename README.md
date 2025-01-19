@@ -1,4 +1,4 @@
-# 🐺 Aardwolf Social
+# Aardwolf Social
 **Powering connected social communities with open-source software**
 
 [![Aardwolf-Social/build](https://github.com/Aardwolf-Social/aardwolf/actions/workflows/aardwolf-build.yml/badge.svg)](https://github.com/Aardwolf-Social/aardwolf/actions/workflows/aardwolf-build.yml)
