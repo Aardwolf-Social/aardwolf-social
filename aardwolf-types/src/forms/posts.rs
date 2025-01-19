@@ -2,6 +2,7 @@ use aardwolf_models::sql_types::{Mime, PostVisibility};
 use mime::TEXT_HTML;
 use serde_derive::{Deserialize, Serialize};
 use thiserror::Error;
+use std::fmt;
 
 use crate::{error::AardwolfFail, traits::Validate};
 
@@ -64,6 +65,13 @@ impl Validate for ValidatePostCreationForm {
             source: self.0.source.clone(),
             name,
         })
+    }
+}
+
+impl fmt::Display for ValidatePostCreationForm {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = self.0.name.as_deref().unwrap_or("Unnamed");
+        write!(f, "Validation error in post '{}': source is '{}'", name, self.0.source)
     }
 }
 
