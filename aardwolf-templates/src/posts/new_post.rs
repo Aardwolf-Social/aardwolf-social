@@ -9,13 +9,13 @@ use crate::elements::{
 };
 
 pub struct NewPost<'a> {
-    csrf_token: &'a str,
-    alert: Option<Alert>,
-    catalog: &'a Catalog,
-    username: Option<&'a str>,
-    source: InputTextarea<'a>,
-    visibility: InputSelect<'a>,
-    name: InputText<'a>,
+    pub csrf_token: &'a str,
+    pub alert: Option<Alert>,
+    pub catalog: &'a Catalog,
+    pub username: Option<&'a str>,
+    pub source: InputTextarea<'a>,
+    pub visibility: InputSelect<'a>,
+    pub name: InputText<'a>,
 }
 
 impl<'a> NewPost<'a> {
