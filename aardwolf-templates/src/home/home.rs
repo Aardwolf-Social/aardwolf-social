@@ -1,4 +1,4 @@
-use aardwolf_types::forms::posts::{PostCreationFormState, ValidatePostCreationFail};
+use aardwolf_types::forms::posts::{PostCreationFormState, ValidatePostCreationForm};
 use gettext::Catalog;
 
 use crate::{
@@ -23,7 +23,7 @@ impl<'a> Home<'a> {
         username: &'a str,
         csrf_token: &'a str,
         form_state: &'a PostCreationFormState,
-        validation_error: Option<&'a ValidatePostCreationFail>,
+        validation_error: Option<&'a ValidatePostCreationForm>,
     ) -> Self {
         Self {
             catalog,
