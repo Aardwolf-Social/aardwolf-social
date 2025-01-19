@@ -8,10 +8,10 @@ use crate::{error::AardwolfFail, traits::Validate};
 
 #[derive(Clone, Debug, Deserialize)]
 pub struct PostCreationForm {
-    csrf_token: String,
-    visibility: PostVisibility,
-    name: Option<String>,
-    source: String,
+    pub csrf_token: String,
+    pub visibility: PostVisibility,
+    pub name: Option<String>,
+    pub source: String,
 }
 
 impl PostCreationForm {

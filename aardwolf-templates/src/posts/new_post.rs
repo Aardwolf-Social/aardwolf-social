@@ -41,7 +41,7 @@ impl<'a> NewPost<'a> {
                 Some(catalog.gettext("Post source")),
                 Some(form_state.source.as_str()),
                 validation_error
-                    .and_then(|e| e.source.as_deref())
+                    .and_then(|e| e.0.source().as_deref()) // Use getter method
                     .map(ToString::to_string)
                     .as_deref(),
             ),
@@ -50,7 +50,7 @@ impl<'a> NewPost<'a> {
                 Some(catalog.gettext("Post visibility")),
                 form_state.visibility.into(),
                 validation_error
-                    .and_then(|e| e.source)
+                    .and_then(|e| e.0.source().as_deref()) // Use getter method
                     .map(|e| e.to_string())
                     .as_deref(),
             ),
@@ -59,7 +59,7 @@ impl<'a> NewPost<'a> {
                 Some(catalog.gettext("Post name")),
                 form_state.name.as_deref(),
                 validation_error
-                    .and_then(|e| e.name)
+                    .and_then(|e| e.0.name().as_deref()) // Use getter method
                     .map(|e| e.to_string())
                     .as_deref(),
             ),
