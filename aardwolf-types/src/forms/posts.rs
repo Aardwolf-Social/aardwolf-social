@@ -1,4 +1,5 @@
-use aardwolf_models::sql_types::{Mime, PostVisibility};
+use aardwolf_models::sql_types::Mime;
+use aardwolf_models::sql_types::PostVisibility;
 use mime::TEXT_HTML;
 use serde_derive::{Deserialize, Serialize};
 use thiserror::Error;
