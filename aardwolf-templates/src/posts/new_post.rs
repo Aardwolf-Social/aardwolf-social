@@ -39,13 +39,16 @@ impl<'a> NewPost<'a> {
             alert,
             catalog,
             username: Some(form_state.username.as_str()),
-source: InputTextarea::new(
-    "source",
-    Some(catalog.gettext("Post source")),
-    match form_state.source.as_ref() {
-        Some(s) => s.as_str(),
-        None => "",
-    },,
+            source: InputTextarea::new(
+                "source",
+                Some(catalog.gettext("Post source")),
+                form_state.source.as_ref().map(|s| s.as_str()).unwrap_or(""),
+                match validation_error {
+                    Some(ValidatePostCreationError::EmptySource) => {
+                        Some("Source must not be empty")
+                    }
+                    _ => None,
+                },
             ),
             visibility: InputSelect::new(
                 "visibility",
