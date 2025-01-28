@@ -289,7 +289,6 @@ impl RoleRevoker {
 pub struct LocalPostCreator(BaseActor);
 
 impl LocalPostCreator {
-    #[cfg_attr(feature = "cargo-clippy", allow(clippy::too_many_arguments))]
     pub fn create_post(
         &self,
         name: Option<String>,
@@ -328,7 +327,6 @@ impl LocalPostCreator {
 pub struct LocalMediaPostCreator(BaseActor);
 
 impl LocalMediaPostCreator {
-    #[cfg_attr(feature = "cargo-clippy", allow(clippy::too_many_arguments))]
     pub fn make_media_post(
         &self,
         name: Option<String>,
@@ -369,7 +367,6 @@ impl LocalMediaPostCreator {
 pub struct LocalCommentCreator(BaseActor);
 
 impl LocalCommentCreator {
-    #[cfg_attr(feature = "cargo-clippy", allow(clippy::too_many_arguments))]
     pub fn make_comment(
         &self,
         name: Option<String>,
@@ -540,7 +537,6 @@ impl From<diesel::result::Error> for FollowRequestManagerError {
 pub struct LocalPersonaCreator<U: UserLike>(U);
 
 impl<U: UserLike> LocalPersonaCreator<U> {
-    #[cfg_attr(feature = "cargo-clippy", allow(clippy::too_many_arguments))]
     pub fn create_persona(
         &self,
         display_name: String,

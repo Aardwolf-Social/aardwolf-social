@@ -1,5 +1,7 @@
 use aardwolf_models::sql_types::{FollowPolicy, PostVisibility};
 use thiserror::Error;
+use csrf::CsrfToken;
+use crate::csrf::CsrfTokenManager;
 
 use crate::{error::AardwolfFail, traits::Validate};
 
@@ -12,6 +14,13 @@ pub struct PersonaCreationForm {
     shortname: String,
     #[serde(default)]
     is_searchable: bool,
+}
+impl PersonaCreationForm {
+    /// Validates the CSRF token using the provided manager
+    pub fn validate_csrf(&self, csrf_manager: &CsrfTokenManager, cookie_value: &str) -> bool {
+        let token = CsrfToken::new(self.csrf_token.clone());
+        csrf_manager.validate_token(&token, cookie_value)
+    }
 }
 
 pub struct PersonaCreationFormState {
