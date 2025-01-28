@@ -5,7 +5,7 @@ use crate::elements::{
     alert::{Alert, AlertKind},
     input_select::InputSelect,
     input_text::InputText,
-    input_textarea::InputTextarea,
+    input_textarea::InputTextarea
 };
 
 pub struct NewPost<'a> {
@@ -25,14 +25,10 @@ impl<'a> NewPost<'a> {
         form_state: &'a PostCreationFormState,
         validation_error: Option<&'a ValidatePostCreationError>,
     ) -> Self {
-        let username = form_state.username.as_ref();
-        let alert = match validation_error {
-            Some(error) => Some(Alert {
-                kind: AlertKind::Error,
-                message: error.to_string(),
-            }),
-            None => None,
-        };
+        let alert = validation_error.map(|error| Alert {
+            kind: AlertKind::Error,
+            message: error.to_string(),
+        });
 
         NewPost {
             csrf_token,
@@ -42,37 +38,33 @@ impl<'a> NewPost<'a> {
             source: InputTextarea::new(
                 "source",
                 Some(catalog.gettext("Post source")),
-                form_state.source.as_ref().map(|s| s.as_str()).unwrap_or(""),
-                match validation_error {
-                    Some(ValidatePostCreationError::EmptySource) => {
-                        Some("Source must not be empty")
-                    }
-                    _ => None,
+                Some(form_state.source.as_str()), // Convert String to &str
+                if matches!(validation_error, Some(ValidatePostCreationError::EmptySource)) {
+                    Some("Source must not be empty")
+                } else {
+                    None
                 },
             ),
             visibility: InputSelect::new(
                 "visibility",
                 Some(catalog.gettext("Post visibility")),
                 form_state.visibility.into(),
-                match validation_error {
-                    Some(ValidatePostCreationError::InvalidVisibility) => {
-                        Some("Invalid visibility")
-                    }
-                    _ => None,
+                if matches!(validation_error, Some(ValidatePostCreationError::InvalidVisibility)) {
+                    Some("Invalid visibility")
+                } else {
+                    None
                 },
             ),
             name: InputText::new(
                 "name",
                 Some(catalog.gettext("Post name")),
                 form_state.name.as_deref(),
-                match validation_error {
-                    Some(ValidatePostCreationError::EmptyName) => {
-                        Some("Name must not be empty")
-                    }
-                    _ => None,
+                if matches!(validation_error, Some(ValidatePostCreationError::EmptyName)) {
+                    Some("Name must not be empty")
+                } else {
+                    None
                 },
             ),
         }
     }
 }
-
