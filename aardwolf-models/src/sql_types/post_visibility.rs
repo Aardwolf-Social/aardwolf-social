@@ -35,7 +35,7 @@ pub enum PostVisibility {
 // Implement the Default trait for PostVisibility, and set it to Public
 impl Default for PostVisibility {
     fn default() -> Self {
-        PostVisibility::Public // Choose an appropriate default variant
+        Self::Public // Choose an appropriate default variant
     }
 }
 

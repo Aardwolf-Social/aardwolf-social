@@ -6,11 +6,12 @@ name: 'Docker Image CI'
 
 on:
   pull_request:
-    types: 
-    - opened
-    - reopened
+    types:
+      - opened
+      - reopened
     branches:
-      - '*'
+      - main
+      - 'banjofox/*'
 
 jobs:
 

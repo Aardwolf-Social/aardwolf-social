@@ -1,21 +1,21 @@
-use aardwolf_types::forms::posts::{PostCreationFormState, ValidatePostCreationForm};
+use aardwolf_types::forms::posts::{PostCreationFormState, ValidatePostCreationError};
 use gettext::Catalog;
 
 use crate::elements::{
     alert::{Alert, AlertKind},
     input_select::InputSelect,
     input_text::InputText,
-    input_textarea::InputTextarea,
+    input_textarea::InputTextarea
 };
 
 pub struct NewPost<'a> {
-    csrf_token: &'a str,
-    alert: Option<Alert>,
-    catalog: &'a Catalog,
-    username: Option<&'a str>,
-    source: InputTextarea<'a>,
-    visibility: InputSelect<'a>,
-    name: InputText<'a>,
+    pub csrf_token: &'a str,
+    pub alert: Option<Alert>,
+    pub catalog: &'a Catalog,
+    pub username: Option<&'a str>,
+    pub source: InputTextarea<'a>,
+    pub visibility: InputSelect<'a>,
+    pub name: InputText<'a>,
 }
 
 impl<'a> NewPost<'a> {
@@ -23,45 +23,47 @@ impl<'a> NewPost<'a> {
         catalog: &'a Catalog,
         csrf_token: &'a str,
         form_state: &'a PostCreationFormState,
-        validation_error: Option<&'a ValidatePostCreationForm>,
+        validation_error: Option<&'a ValidatePostCreationError>,
     ) -> Self {
-        let username = form_state.username;
-        let alert = validation_error.map(|e| Alert {
+        let alert = validation_error.map(|error| Alert {
             kind: AlertKind::Error,
-            message: e.to_string(),
+            message: error.to_string(),
         });
 
         NewPost {
             csrf_token,
             alert,
             catalog,
-            username: Some(username.as_ref()),
+            username: Some(form_state.username.as_str()),
             source: InputTextarea::new(
                 "source",
                 Some(catalog.gettext("Post source")),
-                Some(form_state.source.as_str()),
-                validation_error
-                    .and_then(|e| e.source.as_deref())
-                    .map(ToString::to_string)
-                    .as_deref(),
+                Some(form_state.source.as_str()), // Convert String to &str
+                if matches!(validation_error, Some(ValidatePostCreationError::EmptySource)) {
+                    Some("Source must not be empty")
+                } else {
+                    None
+                },
             ),
             visibility: InputSelect::new(
                 "visibility",
                 Some(catalog.gettext("Post visibility")),
                 form_state.visibility.into(),
-                validation_error
-                    .and_then(|e| e.source)
-                    .map(|e| e.to_string())
-                    .as_deref(),
+                if matches!(validation_error, Some(ValidatePostCreationError::InvalidVisibility)) {
+                    Some("Invalid visibility")
+                } else {
+                    None
+                },
             ),
             name: InputText::new(
                 "name",
                 Some(catalog.gettext("Post name")),
                 form_state.name.as_deref(),
-                validation_error
-                    .and_then(|e| e.name)
-                    .map(|e| e.to_string())
-                    .as_deref(),
+                if matches!(validation_error, Some(ValidatePostCreationError::EmptyName)) {
+                    Some("Name must not be empty")
+                } else {
+                    None
+                },
             ),
         }
     }
