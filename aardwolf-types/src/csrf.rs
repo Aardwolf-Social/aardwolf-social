@@ -19,7 +19,7 @@ impl CsrfTokenManager {
     }
 
     // Constructor for creating a manager with a custom key
-    pub fn new_from_key(key: &[u8; 32]) -> Result<Self> {
+    pub fn new_from_key(key: &[u8]) -> Result<Self> {
         // Create the HmacCsrfProtection instance with no arguments
         let hmac = HmacCsrfProtection::new();
         Ok(CsrfTokenManager { protection: hmac })
