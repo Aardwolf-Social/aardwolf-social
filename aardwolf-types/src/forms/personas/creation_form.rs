@@ -17,9 +17,9 @@ pub struct PersonaCreationForm {
 }
 impl PersonaCreationForm {
     /// Validates the CSRF token using the provided manager
-    pub fn validate_csrf(&self, csrf_manager: &CsrfTokenManager, cookie_value: &str) -> bool {
-        let token = CsrfToken::new(self.csrf_token.clone());
-        csrf_manager.validate_token(&token, cookie_value)
+    pub fn validate_csrf(&self, manager: &CsrfTokenManager, cookie_csrf: &str) -> bool {
+        let csrf_token = CsrfToken::new(self.csrf_token.clone());
+        manager.validate_token(&csrf_token, cookie_csrf).is_ok()
     }
 }
 

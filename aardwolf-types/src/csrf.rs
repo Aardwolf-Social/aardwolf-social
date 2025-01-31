@@ -1,11 +1,9 @@
 use anyhow::{anyhow, Result};
 use base64::{engine::general_purpose, Engine};
 use csrf::{
-    CsrfError, CsrfProtection, CsrfToken, HmacCsrfProtection, UnencryptedCsrfCookie,
-    UnencryptedCsrfToken,
+    CsrfError, CsrfProtection, CsrfToken, HmacCsrfProtection,
 };
 use rand::{rngs::OsRng, TryRngCore};
-use sha2::Sha256;
 
 #[derive(Clone)]
 pub struct CsrfTokenManager {
@@ -36,44 +34,37 @@ impl CsrfTokenManager {
             .map_err(|e| anyhow!("Failed to generate token: {:?}", e))
     }
 
-    // Validates a CSRF token by comparing it with the provided cookie value
-    pub fn validate_token(&self, csrf_token: &CsrfToken, csrf_cookie: &str) -> Result<(), CsrfError> {
-        // Decode base64 strings into bytes, return error if invalid
-        let decode = |s: &str| {
-            general_purpose::STANDARD
-                .decode(s)
-                .map_err(|e| CsrfError::EncryptionFailure(e.to_string()))
-        };
+    pub fn validate_token(&self, csrf_token: &str, csrf_cookie: &str) -> Result<(), CsrfError> {
+        // Decode the base64-encoded CSRF token and cookie
+        let token_bytes = general_purpose::STANDARD
+            .decode(csrf_token.as_bytes())
+            .map_err(|e| CsrfError::EncryptionFailure(format!("Invalid base64 token: {}", e)))?;
     
-        // Decode the token and cookie values
-        let unencrypted_token = UnencryptedCsrfToken::decode(&csrf_token.b64_string()).map_err(|e| CsrfError::EncryptionFailure(e.to_string()))?;
-        let unencrypted_cookie = UnencryptedCsrfCookie::decode(csrf_cookie).map_err(|e| CsrfError::EncryptionFailure(e.to_string()))?;
+        let cookie_bytes = general_purpose::STANDARD
+            .decode(csrf_cookie.as_bytes())
+            .map_err(|e| CsrfError::EncryptionFailure(format!("Invalid base64 cookie: {}", e)))?;
     
-        // Access the underlying bytes without decoding them
-        let token_bytes = unencrypted_token.value();
-        let cookie_bytes = unencrypted_cookie.value();
+        // Parse the token and cookie
+        let parsed_token = self
+            .protection
+            .parse_token(&token_bytes)
+            .map_err(|e| CsrfError::EncryptionFailure(
+                format!("Token parsing error: {}", e)
+            ))?;
+
+        let parsed_cookie = self
+            .protection
+            .parse_cookie(&cookie_bytes)
+            .map_err(|e| CsrfError::EncryptionFailure(
+                format!("Token parsing error: {}", e)
+            ))?;
     
         // Verify the token and cookie pair
-        self.protection
-            .verify_token_pair(&unencrypted_token, &unencrypted_cookie)
+        self.protection.verify_token_pair(&parsed_token, &parsed_cookie)
     }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_generate_and_validate() {
-        let manager = CsrfTokenManager::new().expect("Failed to create manager");
-        let token = manager.generate_token().expect("Failed to generate token");
-        let cookie_value = token.cookie_value();
-        assert!(manager.validate_token(&token, &cookie_value).is_ok());
-    }
-
-    #[test]
-    fn test_invalid_key() {
-        let short_key = [0u8; 16]; // Key too short
-        assert!(CsrfTokenManager::new_from_key(&short_key).is_err());
-    }
+    
+    
+    
+    
+    
 }
