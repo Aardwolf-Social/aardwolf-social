@@ -10,9 +10,6 @@
 #[macro_use]
 extern crate rust_i18n;
 
-// Init translations for current crate.
-// This will load Configuration using the `[package.metadata.i18n]` section in `Cargo.toml` if exists.
-// Or you can pass arguments by `i18n!` to override it.
-i18n!("locales", fallback = "en");
+i18n!("locales", fallback = "en"); // This must be at the crate root
 
-// End rust-i18n configuration
+

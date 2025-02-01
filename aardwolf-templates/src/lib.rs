@@ -1,7 +1,7 @@
-use gettext_macros::init_i18n;
-use rocket_i18n::Translations;
+#[macro_use]
+extern crate rust_i18n; // Ensure macros are available
 
-init_i18n!("aardwolf", en, pl);
+use aardwolf_localization::*; // Import localization crate
 
 include!(concat!(env!("OUT_DIR"), "/templates.rs"));
 
@@ -20,7 +20,23 @@ pub trait Renderable {
     fn render(&self, writer: &mut dyn std::io::Write) -> std::io::Result<()>;
 }
 
-/// Returns an empty Translations object to disable translations due to issues with the gettext library.
-pub fn disabled_translations() -> Translations {
-    Translations::default()
+#[derive(Clone, Debug)]
+pub struct Translations {
+    locale: &'static str,
+}
+
+impl Translations {
+    pub fn new(locale: &'static str) -> Self {
+        Self { locale }
+    }
+
+    pub fn get(&self, key: &str) -> String {
+        t!(key, locale = self.locale) // Now should work correctly
+    }
+}
+
+impl Default for Translations {
+    fn default() -> Self {
+        Self::new("en")
+    }
 }

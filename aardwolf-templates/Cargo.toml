@@ -6,14 +6,15 @@ edition = "2021"
 build = "build.rs"
 
 [build-dependencies]
-config = "0.14.0"
+config = "0.15.7"
 ructe = "0.17.2" # Careted to require exactly 0.13 because newer versions break the build.
 
 [dependencies]
 gettext = "0.4"
 gettext-macros = "0.6.1"
 gettext-utils = "0.1.0"
-rust-i18n = "3" # Adding rust-i18n for handling localization
+aardwolf_localization = { path = "../aardwolf_localization" } # Adjust path as needed
+rust-i18n = "3.1.2" # Ensure this is present
 
 [dependencies.rocket_i18n]
 version = "0.4.1"
@@ -23,6 +24,11 @@ default-features = false
 version = "0.1"
 path = "../aardwolf-types"
 
+[dependencies.aardwolf-localization]
+version = "0.1"
+path = "../aardwolf-localization"
+
+#-
 [dependencies.aardwolf-models]
 version = "0.1"
 path = "../aardwolf-models"
@@ -38,3 +44,7 @@ path = "../aardwolf-yew-frontend"
 [dependencies.syn]
 version = "2.0.77"
 features = ["full", "extra-traits"]
+
+[package.metadata.i18n]
+locales = "locales"
+fallback = "en"
