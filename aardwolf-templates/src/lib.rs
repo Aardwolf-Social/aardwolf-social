@@ -1,5 +1,7 @@
 #[macro_use]
-extern crate rust_i18n; // Ensure macros are available
+mod i18n {
+    include!(concat!(env!("OUT_DIR"), "/generated.i18n.rs"));
+}
 
 use aardwolf_localization::*; // Import localization crate
 
@@ -40,3 +42,4 @@ impl Default for Translations {
         Self::new("en")
     }
 }
+

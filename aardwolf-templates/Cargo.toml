@@ -13,7 +13,6 @@ ructe = "0.17.2" # Careted to require exactly 0.13 because newer versions break 
 gettext = "0.4"
 gettext-macros = "0.6.1"
 gettext-utils = "0.1.0"
-aardwolf_localization = { path = "../aardwolf_localization" } # Adjust path as needed
 rust-i18n = "3.1.2" # Ensure this is present
 
 [dependencies.rocket_i18n]
