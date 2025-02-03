@@ -1,12 +1,15 @@
-#[macro_use]
-extern crate rust_i18n;
+use rust_i18n::i18n;
+use std::borrow::Cow;
 
+i18n!("locales", fallback = "en-us");
+
+#[derive(Debug, Clone)]
 pub struct Translations {
-    locale: std::borrow::Cow<'static, str>,
+    locale: Cow<'static, str>,
 }
 
 impl Translations {
-    pub fn new<S: Into<std::borrow::Cow<'static, str>>>(locale: S) -> Self {
+    pub fn new(locale: impl Into<Cow<'static, str>>) -> Self {
         Self { locale: locale.into() }
     }
 
@@ -14,12 +17,19 @@ impl Translations {
         t!(key, locale = self.locale.as_ref())
     }
 
+    pub fn get_or_fallback(&self, key: &str, default: &str) -> String {
+        let translation = self.get(key);
+        if translation == key {
+            default.to_string()
+        } else {
+            translation
+        }
+    }
+
     pub fn locale(&self) -> &str {
         &self.locale
     }
 }
-
-include!(concat!(env!("OUT_DIR"), "/templates.rs"));
 
 pub mod asides;
 pub mod containers;
