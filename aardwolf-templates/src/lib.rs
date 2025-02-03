@@ -1,10 +1,4 @@
-#[macro_use]
-mod i18n {
-    include!(concat!(env!("OUT_DIR"), "/generated.i18n.rs"));
-}
-
-use aardwolf_localization::*; // Import localization crate
-
+use rust_i18n::t; // Import localization crate
 include!(concat!(env!("OUT_DIR"), "/templates.rs"));
 
 pub mod asides;
@@ -22,7 +16,7 @@ pub trait Renderable {
     fn render(&self, writer: &mut dyn std::io::Write) -> std::io::Result<()>;
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct Translations {
     locale: &'static str,
 }
@@ -33,13 +27,7 @@ impl Translations {
     }
 
     pub fn get(&self, key: &str) -> String {
-        t!(key, locale = self.locale) // Now should work correctly
-    }
-}
-
-impl Default for Translations {
-    fn default() -> Self {
-        Self::new("en")
+        t!(key, locale = self.locale)
     }
 }
 
