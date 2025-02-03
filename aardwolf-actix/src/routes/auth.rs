@@ -21,7 +21,7 @@ use actix_web::{
     web::{Data, Form, Query},
     HttpResponse, ResponseError,
 };
-use rocket_i18n::I18n;
+use rust_i18n::I18n;
 use std::fmt;
 use thiserror::Error;
 

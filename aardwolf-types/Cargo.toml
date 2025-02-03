@@ -50,7 +50,3 @@ features = ["compat"]
 
 [dev-dependencies]
 aardwolf-test-helpers = { version = "0.1", path = "../aardwolf-test-helpers" }
-
-# Build script
-[build]
-script = "build.rs"

@@ -1,5 +1,5 @@
 ### NGINX Configuration
-Because Rocket isn't really designed to serve static files (i.e. CSS, images, etc.) it is necessary to use a web server application.  Banjo's favorite is NGINX because its FAST, and does not require reams of paper to print configurations ;) (most of the time).<br />
+Static files (i.e. CSS, images, etc.) need to be served by a more standard HTTP server.  Banjo's favorite is NGINX because its FAST, and does not require reams of paper to print configurations ;) (most of the time).<br />
 
 `../config/nginx/aardwolf-nginx.conf` -- This is the "server" block, which is basically a clone of the Mastodon config (Banjo is extreeeemely lazy...) but without all the "cruft"
 `../config/nginx/includes/gzip.conf`  -- This is the GZIP compression info
