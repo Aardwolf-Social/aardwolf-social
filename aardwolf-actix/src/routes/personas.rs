@@ -22,7 +22,6 @@ use actix_web::{
     web::{Data, Form, Path},
     HttpResponse, ResponseError,
 };
-use rocket_i18n::I18n;
 use serde_derive::Serialize;
 use std::fmt;
 use thiserror::Error;

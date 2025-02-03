@@ -39,10 +39,6 @@ version = "2.2"
 default-features = false
 features = ["postgres", "uuid", "chrono"]
 
-[dependencies.rocket_i18n]
-version = "0.4.1"
-default-features = false
-
 [dependencies.futures]
 version = "0.3"
 features = ["compat"]

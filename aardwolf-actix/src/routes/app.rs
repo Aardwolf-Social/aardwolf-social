@@ -1,7 +1,6 @@
 use aardwolf_templates::home::Home;
 use aardwolf_types::forms::posts::PostCreationFormState;
 use actix_web::{web::Data, HttpResponse};
-use rocket_i18n::I18n;
 
 use crate::{
     traits::RenderableExt,
