@@ -5,15 +5,18 @@ authors = ["asonix <asonix@asonix.dog>"]
 edition = "2021"
 build = "build.rs"
 
+[profile.dev]
+env.OUT_DIR = "/compiled-templates"
+
 [build-dependencies]
 config = "0.15.7"
-ructe = "0.17.2" # Careted to require exactly 0.13 because newer versions break the build.
+ructe = "0.17.2"
 
 [dependencies]
 gettext = "0.4"
 gettext-macros = "0.6.1"
 gettext-utils = "0.1.0"
-rust-i18n = "3.1.2" # Ensure this is present
+rust-i18n = { version = "3.1.2", features = ["log-miss-tr"] }
 
 [dependencies.aardwolf-types]
 version = "0.1"
@@ -41,5 +44,5 @@ version = "2.0.77"
 features = ["full", "extra-traits"]
 
 [package.metadata.i18n]
-locales = ["en-us"]
+locales = ["en-us","pl"]
 fallback = "en-us"
