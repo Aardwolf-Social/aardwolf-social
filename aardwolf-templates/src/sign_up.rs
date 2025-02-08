@@ -32,51 +32,51 @@ impl<'a> SignUp<'a> {
             alert: if server_error {
                 Some(Alert {
                     kind: AlertKind::Error,
-                    message: i18n!(catalog, "There was an error creating your account"),
+                    message: t!(catalog, "There was an error creating your account"),
                 })
             } else {
                 None
             },
             email: InputEmail {
                 name: "email",
-                label: i18n!(catalog, "E-Mail Address"),
+                label: t!(catalog, "E-Mail Address"),
                 placeholder: Some(i18n!(catalog, "E-Mail Address")),
                 value: &state.email,
                 error: validation_error.and_then(|e| {
                     e.email.as_ref().map(|e| match *e {
-                        SignUpEmailValidationFail::Empty => i18n!(catalog, "Email cannot be empty"),
+                        SignUpEmailValidationFail::Empty => t!(catalog, "Email cannot be empty"),
                         SignUpEmailValidationFail::Malformed => {
-                            i18n!(catalog, "Invalid email address")
+                            t!(catalog, "Invalid email address")
                         }
                     })
                 }),
             },
             password: InputPassword {
                 name: "password",
-                label: i18n!(catalog, "Password"),
+                label: t!(catalog, "Password"),
                 placeholder: Some(i18n!(catalog, "Password")),
                 error: validation_error.and_then(|e| {
                     e.password.as_ref().map(|e| match *e {
                         SignUpPasswordValidationFail::Empty => {
-                            i18n!(catalog, "Password cannot be empty")
+                            t!(catalog, "Password cannot be empty")
                         }
                         SignUpPasswordValidationFail::TooShort => {
-                            i18n!(catalog, "Password is too short")
+                            t!(catalog, "Password is too short")
                         }
                     })
                 }),
             },
             password_confirmation: InputPassword {
                 name: "password_confirmation",
-                label: i18n!(catalog, "Password Confirmation"),
+                label: t!(catalog, "Password Confirmation"),
                 placeholder: Some(i18n!(catalog, "Password Confirmation")),
                 error: validation_error.and_then(|e| {
                     e.password_confirmation.as_ref().map(|e| match *e {
                         SignUpPasswordConfirmationValidationFail::Empty => {
-                            i18n!(catalog, "Password confirmation cannot be empty")
+                            t!(catalog, "Password confirmation cannot be empty")
                         }
                         SignUpPasswordConfirmationValidationFail::Match => {
-                            i18n!(catalog, "Password confirmation must match password")
+                            t!(catalog, "Password confirmation must match password")
                         }
                     })
                 }),

@@ -10,13 +10,13 @@ env.OUT_DIR = "/compiled-templates"
 
 [build-dependencies]
 config = "0.15.7"
-ructe = "0.17.2"
+ructe = "0.18.2"
 
 [dependencies]
 gettext = "0.4"
 gettext-macros = "0.6.1"
 gettext-utils = "0.1.0"
-rust-i18n = { version = "3.1.2", features = ["log-miss-tr"] }
+rust-i18n = { version = "3", features = ["log-miss-tr"] }
 
 [dependencies.aardwolf-types]
 version = "0.1"
@@ -44,5 +44,5 @@ version = "2.0.77"
 features = ["full", "extra-traits"]
 
 [package.metadata.i18n]
-locales = ["en-us","pl"]
+locales = ["../aardwolf-localization/locales"]
 fallback = "en-us"

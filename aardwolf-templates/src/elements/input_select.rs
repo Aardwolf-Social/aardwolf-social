@@ -1,6 +1,6 @@
 use aardwolf_models::sql_types::{FollowPolicy, PostVisibility};
 use gettext::Catalog;
-use gettext_macros::i18n;
+use rust_i18n::t;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct InputSelect<'a> {
@@ -45,7 +45,7 @@ impl<'a> InputSelect<'a> {
     pub fn with_visibility_options(catalog: &'a Catalog) -> Self {
         Self {
             name: "visibility",
-            label: i18n!(catalog, "Post visibility"),
+            label: t!(catalog, "Post visibility"),
             selected_value: PostVisibility::Public.to_string(),
             options: visibility_options(catalog),
             error: None,
@@ -64,15 +64,15 @@ fn follow_policy_options(catalog: &Catalog) -> Vec<SelectOption<'_>> {
     vec![
         SelectOption {
             value: FollowPolicy::AutoAccept.into(),
-            display: i18n!(catalog, "Automatically accept new followers"),
+            display: t!(catalog, "Automatically accept new followers"),
         },
         SelectOption {
             value: FollowPolicy::AutoReject.into(),
-            display: i18n!(catalog, "Automatically reject new followers"),
+            display: t!(catalog, "Automatically reject new followers"),
         },
         SelectOption {
             value: FollowPolicy::ManualReview.into(),
-            display: i18n!(catalog, "Manually review new followers"),
+            display: t!(catalog, "Manually review new followers"),
         },
     ]
 }
@@ -81,19 +81,19 @@ fn visibility_options(catalog: &Catalog) -> Vec<SelectOption<'_>> {
     vec![
         SelectOption {
             value: PostVisibility::Public.into(),
-            display: i18n!(catalog, "Visible to everyone"),
+            display: t!(catalog, "Visible to everyone"),
         },
         SelectOption {
             value: PostVisibility::FollowersOnly.into(),
-            display: i18n!(catalog, "Visible to followers"),
+            display: t!(catalog, "Visible to followers"),
         },
         SelectOption {
             value: PostVisibility::FriendsOnly.into(),
-            display: i18n!(catalog, "Visible to mutuals"),
+            display: t!(catalog, "Visible to mutuals"),
         },
         SelectOption {
             value: PostVisibility::ListedPeopleOnly.into(),
-            display: i18n!(catalog, "Only visible to mentioned users"),
+            display: t!(catalog, "Only visible to mentioned users"),
         },
     ]
 }

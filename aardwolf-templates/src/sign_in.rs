@@ -31,30 +31,30 @@ impl<'a> SignIn<'a> {
             alert: if server_error {
                 Some(Alert {
                     kind: AlertKind::Error,
-                    message: i18n!(catalog, "There was an error logging in"),
+                    message: t!(catalog, "There was an error logging in"),
                 })
             } else {
                 None
             },
             email: InputEmail {
                 name: "email",
-                label: i18n!(catalog, "E-Mail Address"),
+                label: t!(catalog, "E-Mail Address"),
                 placeholder: Some(i18n!(catalog, "E-Mail Address")),
                 value: &state.email,
                 error: validation_error.and_then(|e| {
                     e.email.as_ref().map(|e| match *e {
-                        SignInEmailValidationFail::Empty => i18n!(catalog, "Email cannot be empty"),
+                        SignInEmailValidationFail::Empty => t!(catalog, "Email cannot be empty"),
                     })
                 }),
             },
             password: InputPassword {
                 name: "password",
-                label: i18n!(catalog, "Password"),
+                label: t!(catalog, "Password"),
                 placeholder: Some(i18n!(catalog, "Password")),
                 error: validation_error.and_then(|e| {
                     e.password.as_ref().map(|e| match *e {
                         SignInPasswordValidationFail::Empty => {
-                            i18n!(catalog, "Password cannot be empty")
+                            t!(catalog, "Password cannot be empty")
                         }
                     })
                 }),
