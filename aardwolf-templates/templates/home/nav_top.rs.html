@@ -1,3 +1,4 @@
+@use rust_i18n::t;
 @use crate::home::NavTop;
 
 @(nav_top_data: &NavTop)
@@ -5,7 +6,7 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <strong>{{ i18n!(nav_top_data.catalog, "Home") }}</strong>
+            <strong>("{}", t!(nav_top_data.catalog, "Home"));</strong>
         </a>
         <a class="navbar-item" href="https://aardwolf.social">
             <img src="/web/images/aardwolf-logo.png" height="100" alt="Aardwolf Logo">
@@ -20,13 +21,13 @@
     <div class="navbar-menu">
         <div class="navbar-end">
             <a class="navbar-item" href="/settings">
-                {{ i18n!(nav_top_data.catalog, "Settings") }}
+                ("{}", t!("nav_top_data.catalog, "Settings"));
             </a>
             <a class="navbar-item" href="/notifications">
-                {{ i18n!(nav_top_data.catalog, "Notifications") }}
+                ("{}", t!("nav_top_data.catalog, "Notifications"));
             </a>
             <a class="navbar-item" href="/logout">
-                {{ i18n!(nav_top_data.catalog, "Logout") }}
+                ("{}", t!("nav_top_data.catalog, "Logout"));
             </a>
         </div>
     </div>
