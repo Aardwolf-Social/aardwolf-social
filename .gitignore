@@ -5,6 +5,7 @@
 # Ignore envrionment/OS files
 .DS_Store/
 .vscode/
+.idea
 
 # This is used for Docker
 .env

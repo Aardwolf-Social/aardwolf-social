@@ -86,7 +86,6 @@ dependencies = [
  "config",
  "gettext",
  "gettext-macros",
- "gettext-utils",
  "ructe",
  "rust-i18n",
  "syn 2.0.98",
