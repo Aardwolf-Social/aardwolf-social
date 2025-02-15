@@ -22,5 +22,5 @@ version = "0.1"
 path = "../aardwolf-models"
 
 [package.metadata.i18n]
-locales = ["../aardwolf-localization/locales"]
-fallback = "en-us"
+base_path = "../locales"
+

@@ -5,7 +5,8 @@
 # Ignore envrionment/OS files
 .DS_Store/
 .vscode/
-.idea
+.idea/
+.qodo/
 
 # This is used for Docker
 .env
@@ -32,7 +33,6 @@ aardwolf.log
 diesel.toml
 .config
 
-
 # Translations
 **/*.po~
 translations/
@@ -40,5 +40,3 @@ po
 
 # Compiled templates
 src/templates.rs
-
-.qodo

@@ -10,4 +10,3 @@ pub mod search_bar;
 
 pub use lang_dropdown::LangDropdown;
 pub use notification_dropdown::NotificationDropdown;
-

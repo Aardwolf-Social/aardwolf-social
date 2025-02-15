@@ -1,10 +1,8 @@
 use rust_i18n::t;
 use yew::prelude::*;
 
-
 #[function_component(AboutUs)]
 pub fn about_us() -> Html {
-
     let title = t!("hello");
 
     html! {

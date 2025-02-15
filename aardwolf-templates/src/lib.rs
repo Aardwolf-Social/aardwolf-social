@@ -1,7 +1,11 @@
-use rust_i18n::i18n;
-use std::borrow::Cow;
+// Load I18n macro, for allow you to use `t!` macro in anywhere.
+#[macro_use]
+extern crate rust_i18n;
 
-i18n!("../aardwolf-localization/locales", fallback = "en-us");
+// Config fallback missing translations to "en" locale.
+// Use `fallback` option to set fallback locale.
+//
+i18n!();
 
 #[derive(Debug, Clone)]
 pub struct Translations {
@@ -10,17 +14,25 @@ pub struct Translations {
 
 impl Translations {
     pub fn new(locale: impl Into<Cow<'static, str>>) -> Self {
-        Self { locale: locale.into() }
+        Self {
+            locale: locale.into(),
+        }
     }
 
-    pub fn get(&self, key: &str) -> String {
-        t!(key, locale = self.locale.as_ref())
+    pub fn get(&self, key: &str) -> Cow<'static, str> {
+        match rust_i18n::t!(key, locale = self.locale.as_ref()) {
+            Ok(s) => s.into(),
+            Err(e) => {
+                eprintln!("Failed to translate key '{}': {}", key, e);
+                key.into()
+            }
+        }
     }
 
-    pub fn get_or_fallback(&self, key: &str, default: &str) -> String {
+    pub fn get_or_fallback(&self, key: &str, default: &str) -> Cow<'static, str> {
         let translation = self.get(key);
         if translation == key {
-            default.to_string()
+            Cow::from(default.to_string())
         } else {
             translation
         }
@@ -35,9 +47,9 @@ pub mod asides;
 pub mod containers;
 pub mod elements;
 pub mod error;
+pub mod first_login;
 pub mod home;
 pub mod posts;
-pub mod first_login;
 pub mod sign_in;
 pub mod sign_up;
 

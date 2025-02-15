@@ -11,5 +11,3 @@
 extern crate rust_i18n;
 
 i18n!("locales", fallback = "en"); // This must be at the crate root
-
-

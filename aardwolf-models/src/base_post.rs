@@ -147,7 +147,7 @@ impl NewBasePost {
 }
 
 // This test fails due to:
-// Error: duplicate key value violates unique constraint "posts_unique_base_posts", 
+// Error: duplicate key value violates unique constraint "posts_unique_base_posts",
 /*
 #[cfg(test)]
 mod tests {

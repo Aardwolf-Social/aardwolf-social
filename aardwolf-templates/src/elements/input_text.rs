@@ -53,4 +53,3 @@ impl<'a> From<&'a InputText<'a>> for Input<'a> {
         }
     }
 }
-

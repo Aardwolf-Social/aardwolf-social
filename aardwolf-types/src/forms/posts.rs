@@ -58,12 +58,20 @@ impl Validate for ValidatePostCreationForm {
             return Err(ValidatePostCreationError::EmptySource);
         }
 
-        if !matches!(self.0.visibility, PostVisibility::Public | PostVisibility::FollowersOnly) {
+        if !matches!(
+            self.0.visibility,
+            PostVisibility::Public | PostVisibility::FollowersOnly
+        ) {
             log::error!("Validation failed: invalid visibility");
             return Err(ValidatePostCreationError::InvalidVisibility);
         }
 
-        let name = self.0.name.as_deref().map(|n| n.trim().to_string()).filter(|n| !n.is_empty());
+        let name = self
+            .0
+            .name
+            .as_deref()
+            .map(|n| n.trim().to_string())
+            .filter(|n| !n.is_empty());
 
         Ok(ValidatedPostCreationForm {
             media_type: aardwolf_models::sql_types::Mime(TEXT_HTML),
@@ -75,11 +83,14 @@ impl Validate for ValidatePostCreationForm {
     }
 }
 
-
 impl fmt::Display for ValidatePostCreationForm {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = self.0.name.as_deref().unwrap_or("Unnamed");
-        write!(f, "Validation error in post '{}': source is '{}'", name, self.0.source)
+        write!(
+            f,
+            "Validation error in post '{}': source is '{}'",
+            name, self.0.source
+        )
     }
 }
 

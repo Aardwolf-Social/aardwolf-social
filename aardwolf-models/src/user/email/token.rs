@@ -51,7 +51,7 @@ pub fn create_token() -> Result<(EmailToken, HashedEmailToken), CreationError> {
             random_char
         })
         .collect::<String>();
-    
+
     #[cfg(any(test, feature = "test"))]
     warn!("BUILT IN TEST MODE");
 

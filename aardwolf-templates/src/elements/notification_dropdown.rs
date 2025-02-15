@@ -6,4 +6,3 @@ pub struct NotificationDropdown<'a> {
     /// The gettext catalog for translating strings.
     catalog: &'a Catalog,
 }
-
