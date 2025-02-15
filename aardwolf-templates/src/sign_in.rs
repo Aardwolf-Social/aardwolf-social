@@ -5,9 +5,9 @@ use aardwolf_types::forms::auth::{
 use gettext::Catalog;
 use gettext_macros::i18n;
 
-use crate:: Renderable;
 use crate::elements::alert::{Alert, AlertKind};
 use crate::elements::input::{InputEmail, InputPassword};
+use crate::Renderable;
 
 pub struct SignIn<'a> {
     pub(crate) catalog: &'a Catalog,

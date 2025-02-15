@@ -7,9 +7,9 @@ use actix_session::{storage::CookieSessionStore, SessionMiddleware};
 use actix_web::{
     cookie::Key,
     middleware::Logger,
-    web::{get, post, resource, scope, Data},
-    App, HttpServer,
-    rt::Runtime
+    rt::Runtime,
+    web::{get, post, resource, scope, Data}, App,
+    HttpServer
 };
 
 use config::Config;

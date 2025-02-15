@@ -1,5 +1,5 @@
 use gettext::Catalog;
-use std::io::{Write, Result};
+use std::io::{Result, Write};
 
 use crate::Renderable;
 

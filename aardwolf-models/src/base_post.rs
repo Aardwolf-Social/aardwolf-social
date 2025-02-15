@@ -168,9 +168,9 @@ mod tests {
 // Debugged, Codium AI Suggestion:
 #[cfg(test)]
 mod tests {
-    use ::mime::TEXT_PLAIN;
     use super::*;
     use crate::sql_types::*;
+    use ::mime::TEXT_PLAIN;
 
     #[test]
     fn test_base_post_id() {

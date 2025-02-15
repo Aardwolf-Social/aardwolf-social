@@ -1,16 +1,16 @@
-//-
-// THIS IS THE BROKEN VERSION OF ./src/lib.rs
-// It was created to use the config::Builder, and does not compile.
-//
-use std::io::ErrorKind;
 use anyhow::{Context, Result};
 use clap::Parser;
 use clap_verbosity_flag::Verbosity;
 use config::{Config, Environment, File, FileFormat};
 use log::LevelFilter;
+//-
+// THIS IS THE BROKEN VERSION OF ./src/lib.rs
+// It was created to use the config::Builder, and does not compile.
+//
+use std::io::ErrorKind;
 use std::path::PathBuf;
-use url::Url;
 use thiserror::Error;
+use url::Url;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
