@@ -1,4 +1,4 @@
-@use gettext_macros::i18n;
+@use rust_i18n::t;
 @use crate::elements::NotificationContent;
 
 @(notification_content: &NotificationContent)
@@ -16,7 +16,7 @@
           <strong>{{ notification_content.author_name }}</strong>
           <small>@{{ notification_content.author_handle }}</small>
           <br />
-          {{ i18n!(notification_content.catalog, notification_content.message) }}
+          ("{}", t!("notification_content.catalog, notification_content.message));
           <br />
           <small><time datetime="{{ notification_content.timestamp }}">{{ notification_content.timestamp }}</time></small>
         </p>
