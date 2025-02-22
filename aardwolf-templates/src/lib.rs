@@ -1,7 +1,7 @@
 use rust_i18n::i18n;
 use std::borrow::Cow;
 
-i18n!("../aardwolf-localization/locales", fallback = "en-us");
+i18n!("locales", fallback = "en-us");
 
 #[derive(Debug, Clone)]
 pub struct Translations {

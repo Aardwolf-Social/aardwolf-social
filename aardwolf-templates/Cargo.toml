@@ -5,22 +5,44 @@ authors = ["asonix <asonix@asonix.dog>"]
 edition = "2021"
 build = "build.rs"
 
+[profile.dev]
+env.OUT_DIR = "/compiled-templates"
+
 [build-dependencies]
-ructe = "0.18.2"
+config = "0.15.7"
+ructe = "0.17.2"
 
 [dependencies]
-gettext = "0.4.0"
+gettext = "0.4"
 gettext-macros = "0.6.1"
+gettext-utils = "0.1.0"
 rust-i18n = { version = "3.1.2", features = ["log-miss-tr"] }
 
 [dependencies.aardwolf-types]
 version = "0.1"
 path = "../aardwolf-types"
 
+[dependencies.aardwolf-localization]
+version = "0.1"
+path = "../aardwolf-localization"
+
+#-
 [dependencies.aardwolf-models]
 version = "0.1"
 path = "../aardwolf-models"
 
+#- 
+# Start of Yew Migration?
+[dependencies.aardwolf-yew-frontend]
+version = "0.1.0"
+path = "../aardwolf-yew-frontend"
+
+#- 
+# Adding syn for template compilation
+[dependencies.syn]
+version = "2.0.77"
+features = ["full", "extra-traits"]
+
 [package.metadata.i18n]
-locales = ["../aardwolf-localization/locales"]
+locales = ["en-us","pl"]
 fallback = "en-us"
