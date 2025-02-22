@@ -2,8 +2,8 @@ use aardwolf_models::sql_types::Mime;
 use aardwolf_models::sql_types::PostVisibility;
 use mime::TEXT_HTML;
 use serde_derive::{Deserialize, Serialize};
-use thiserror::Error;
 use std::fmt;
+use thiserror::Error;
 
 use crate::{error::AardwolfFail, traits::Validate};
 

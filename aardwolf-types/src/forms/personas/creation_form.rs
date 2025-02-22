@@ -1,6 +1,6 @@
+use crate::csrf::CsrfTokenManager;
 use aardwolf_models::sql_types::{FollowPolicy, PostVisibility};
 use thiserror::Error;
-use crate::csrf::CsrfTokenManager;
 
 use crate::{error::AardwolfFail, traits::Validate};
 

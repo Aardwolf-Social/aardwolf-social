@@ -190,7 +190,7 @@ impl Validate for PlaintextPassword {
 /// This type can only be created through the `Create` trait's `create` method. It can be
 /// serialized, but only through its `ToSql` method for use with Diesel. Because of this limitation,
 /// it is very important that no stray `to_sql` methods are used in applications consuming this
-/// libary.
+/// library.
 ///
 /// The only use this type has is to be "verified" via the `Verify` trait. Once a password is
 /// "verified", a user can be considered "logged in".

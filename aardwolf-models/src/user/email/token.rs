@@ -1,14 +1,13 @@
-use std::fmt;
-
 use bcrypt::{hash, verify};
 use diesel::{backend::Backend, deserialize, serialize, sql_types::Text};
 #[cfg(any(test, feature = "test"))]
 use log::warn;
-use rand::{distributions::Alphanumeric, rngs::OsRng, Rng};
+use rand::{distr::Alphanumeric, rngs::OsRng, seq::IteratorRandom, Rng};
 use serde::{
     de::{Deserialize, Deserializer},
     ser::{Serialize, Serializer},
 };
+use std::fmt;
 use thiserror::Error;
 
 /// A trait used to verify emails
@@ -31,7 +30,7 @@ pub enum CreationError {
 pub enum VerificationError {
     #[error("Failed to verify token")]
     Process,
-    #[error("Token was invaid")]
+    #[error("Token was invalid")]
     Token,
 }
 
@@ -40,24 +39,28 @@ pub enum VerificationError {
 /// Email tokens should only be able to be created in certain situations, so this function must not
 /// be in scope unless it should be possible to verify an email
 pub fn create_token() -> Result<(EmailToken, HashedEmailToken), CreationError> {
-    let token = OsRng
-        .sample_iter(&Alphanumeric)
-        .take(32)
-        .map(|c| c.to_string())
-        .collect::<Vec<_>>()
-        .join("");
+    const HASH_COST: u32 = if cfg!(any(test, feature = "test")) {
+        4
+    } else {
+        bcrypt::DEFAULT_COST
+    };
 
+    let token: String = (0..32)
+        .map(|_| {
+            let random_char: char = rand::random::<char>();
+            random_char
+        })
+        .collect::<String>();
+    
     #[cfg(any(test, feature = "test"))]
     warn!("BUILT IN TEST MODE");
 
-    #[cfg(not(any(test, feature = "test")))]
-    let h = hash(&token, bcrypt::DEFAULT_COST);
-    #[cfg(any(test, feature = "test"))]
-    let h = hash(&token, 4);
+    let h = hash(&token, HASH_COST).map_err(|e| {
+        log::error!("Hashing failed: {}", e);
+        CreationError::Hash
+    })?;
 
-    let hashed_token = h.map_err(|_| CreationError::Hash)?;
-
-    Ok((EmailToken(token), HashedEmailToken(hashed_token)))
+    Ok((EmailToken(token), HashedEmailToken(h)))
 }
 
 #[derive(AsExpression, FromSqlRow)]
@@ -89,7 +92,7 @@ where
 impl<DB> deserialize::FromSql<Text, DB> for HashedEmailToken
 where
     DB: Backend,
-    *const str: deserialize::FromSql<diesel::sql_types::Text, DB>,
+    *const str: deserialize::FromSql<Text, DB>,
 {
     fn from_sql(bytes: <DB as Backend>::RawValue<'_>) -> deserialize::Result<Self> {
         deserialize::FromSql::<Text, DB>::from_sql(bytes).map(HashedEmailToken)
@@ -102,14 +105,9 @@ impl VerifyEmail for HashedEmailToken {
         email_verification_token: EmailVerificationToken,
     ) -> Result<(), VerificationError> {
         verify(email_verification_token.0, &self.0)
-            .map_err(|_| VerificationError::Process)
-            .and_then(|verified| {
-                if verified {
-                    Ok(())
-                } else {
-                    Err(VerificationError::Token)
-                }
-            })
+            .map_err(|_| VerificationError::Process)?
+            .then(|| ())
+            .ok_or(VerificationError::Token)
     }
 }
 
@@ -183,6 +181,16 @@ mod tests {
         assert!(
             hashed_token.verify_email(fake_token).is_err(),
             "Should not have verified invalid token"
+        );
+    }
+
+    #[test]
+    fn token_creation_works() {
+        let (email_token, hashed_token) = create_token().unwrap();
+        assert!(!email_token.0.is_empty(), "Email token should not be empty");
+        assert!(
+            !hashed_token.0.is_empty(),
+            "Hashed token should not be empty"
         );
     }
 }
