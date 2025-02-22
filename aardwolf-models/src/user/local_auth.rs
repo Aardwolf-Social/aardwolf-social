@@ -60,8 +60,6 @@ impl LocalAuth {
             return Err(VerificationError::Process);
         }
 
-        
-
         self.password.verify(password).map(|_| AuthenticatedUser {
             id: user.id,
             primary_email: user.primary_email,

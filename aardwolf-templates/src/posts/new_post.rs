@@ -5,7 +5,7 @@ use crate::elements::{
     alert::{Alert, AlertKind},
     input_select::InputSelect,
     input_text::InputText,
-    input_textarea::InputTextarea
+    input_textarea::InputTextarea,
 };
 
 pub struct NewPost<'a> {
@@ -39,7 +39,10 @@ impl<'a> NewPost<'a> {
                 "source",
                 Some(catalog.gettext("Post source")),
                 Some(form_state.source.as_str()), // Convert String to &str
-                if matches!(validation_error, Some(ValidatePostCreationError::EmptySource)) {
+                if matches!(
+                    validation_error,
+                    Some(ValidatePostCreationError::EmptySource)
+                ) {
                     Some("Source must not be empty")
                 } else {
                     None
@@ -49,7 +52,10 @@ impl<'a> NewPost<'a> {
                 "visibility",
                 Some(catalog.gettext("Post visibility")),
                 form_state.visibility.into(),
-                if matches!(validation_error, Some(ValidatePostCreationError::InvalidVisibility)) {
+                if matches!(
+                    validation_error,
+                    Some(ValidatePostCreationError::InvalidVisibility)
+                ) {
                     Some("Invalid visibility")
                 } else {
                     None

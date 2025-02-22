@@ -5,4 +5,3 @@ pub struct NotificationContent<'a> {
     /// The translation catalog to use for translating the notification content.
     pub catalog: &'a Catalog,
 }
-

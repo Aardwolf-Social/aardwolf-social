@@ -1,6 +1,6 @@
 mod tests {
     use config::ConfigError;
-    use std::{error::Error, str::FromStr};
+    use std::error::Error;
 
     #[test]
     fn test_main() -> Result<(), Box<dyn Error>> {

@@ -1,6 +1,8 @@
 use gettext::Catalog;
 
-use crate::elements::{alert::Alert, input_select::InputSelect, input_text::InputText, input_textarea::InputTextarea};
+use crate::elements::{
+    alert::Alert, input_select::InputSelect, input_text::InputText, input_textarea::InputTextarea,
+};
 
 #[derive(Debug)]
 pub struct ReplyPost<'a> {

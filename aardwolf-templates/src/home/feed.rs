@@ -1,5 +1,5 @@
 use gettext::Catalog;
-use std::io::{Write, Result};
+use std::io::{Result, Write};
 
 use crate::Renderable;
 
@@ -15,7 +15,11 @@ impl<'a> Feed<'a> {
 
 impl<'a> Renderable for Feed<'a> {
     fn render(&self, writer: &mut dyn Write) -> Result<()> {
-        write!(writer, "{}", self.catalog.gettext("This is the feed template"))?;
+        write!(
+            writer,
+            "{}",
+            self.catalog.gettext("This is the feed template")
+        )?;
         writer.flush()?; // Ensure the writer is flushed after writing
         Ok(())
     }

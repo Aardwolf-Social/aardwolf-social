@@ -188,8 +188,6 @@ impl UnverifiedEmail {
         user: UnverifiedUser,
         token: EmailVerificationToken,
     ) -> Result<(AuthenticatedUser, VerifyEmail), VerificationError> {
-        
-
         self.verify(token).map(|verify_email| {
             (
                 AuthenticatedUser {

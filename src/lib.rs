@@ -1,12 +1,12 @@
+use anyhow::{Context, Result};
+use clap::Parser;
+use clap_verbosity_flag::Verbosity;
+use config::{Config, Environment};
 //-
 // THIS IS THE WORKING VERSION OF ./src/lib.rs
 // It uses old config crate which needs to be updated to use config::Builder
 //
 use std::env;
-use anyhow::{Context, Result};
-use clap::Parser;
-use clap_verbosity_flag::Verbosity;
-use config::{Config, Environment};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -55,7 +55,9 @@ pub fn configure(parsed_args: Args) -> Result<Config> {
         .get_string("cfg_file")
         .context(ErrorKind::ConfigMissingKeys)?;
     let config_file = config::File::with_name(&config_file_string);
-    config.merge(config_file).context(ErrorKind::ConfigImmutable)?;
+    config
+        .merge(config_file)
+        .context(ErrorKind::ConfigImmutable)?;
 
     // Apply environment variable overrides
     let env_vars = Environment::with_prefix("AARDWOLF")
@@ -91,11 +93,10 @@ pub fn db_conn_string(config: &Config) -> Result<String> {
         .collect::<Result<_, _>>()
         .context(ErrorKind::ConfigMissingKeys)?;
 
-    match string_vec[0].as_str()
-        {
-            "postgres" | "postgresql" => (),
-            _ => Err(ErrorKind::UnsupportedDbScheme)?,
-        }
+    match string_vec[0].as_str() {
+        "postgres" | "postgresql" => (),
+        _ => Err(ErrorKind::UnsupportedDbScheme)?,
+    }
 
     Ok(format!(
         "{scheme}://{username}:{password}@{host}:{port}/{database}",
