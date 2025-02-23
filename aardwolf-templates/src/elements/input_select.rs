@@ -26,12 +26,7 @@ impl<'a> Default for InputSelect<'a> {
 }
 
 impl<'a> InputSelect<'a> {
-    pub fn new(
-        name: &'a str,
-        label: Option<&str>,
-        value: &str,
-        error: Option<&str>,
-    ) -> Self {
+    pub fn new(name: &'a str, label: Option<&str>, value: &str, error: Option<&str>) -> Self {
         Self {
             name,
             label: label.map(|l| l.to_string()).unwrap_or_default(),

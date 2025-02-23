@@ -1,11 +1,10 @@
 use ructe::{Result, Ructe};
 
 fn main() -> Result<()> {
-
     let metadata = std::env::var("CARGO_PKG_METADATA").unwrap_or_default();
     println!("cargo:rerun-if-changed=Cargo.toml");
     println!("cargo:warning=Metadata: {}", metadata);
-    
+
     // Initialize Ructe from the environment
     let mut ructe = Ructe::from_env()?;
 

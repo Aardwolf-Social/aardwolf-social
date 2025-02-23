@@ -83,6 +83,5 @@ pub struct InputCheckbox<'a> {
 pub enum InputKind {
     Text,
     Checkbox,
-    Select,     
-    
+    Select,
 }

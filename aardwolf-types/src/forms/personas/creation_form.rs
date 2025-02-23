@@ -87,7 +87,7 @@ pub enum ValidateDisplayNameFail {
 #[derive(Clone, Debug, Serialize)]
 pub enum ValidateFollowPolicyFail {
     Invalid,
-}    
+}
 
 #[derive(Clone, Debug, Serialize)]
 pub enum ValidateDefaultVisibilityFail {

@@ -40,4 +40,3 @@ impl<'a> Renderable for Home<'a> {
         crate::templates::home::home_html(write, self)
     }
 }
-
