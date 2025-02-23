@@ -8,6 +8,7 @@ edition = "2021"
 [workspace]
 members = [
     "aardwolf-actix",
+    "aardwolf-api",
     "aardwolf-localization",
     "aardwolf-models",
     "aardwolf-templates",

@@ -42,6 +42,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aardwolf-api"
+version = "0.1.0"
+
+[[package]]
 name = "aardwolf-localization"
 version = "0.1.0"
 dependencies = [
