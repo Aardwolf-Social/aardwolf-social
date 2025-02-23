@@ -8,6 +8,7 @@
 .idea/
 .qodo/
 
+
 # This is used for Docker
 .env
 
@@ -40,3 +41,4 @@ po
 
 # Compiled templates
 src/templates.rs
+

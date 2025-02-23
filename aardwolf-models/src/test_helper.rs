@@ -384,7 +384,8 @@ pub fn make_unverified_authenticated_user(
     let auth = make_local_auth(conn, &user, password)?;
     let user = UnauthenticatedUser::by_id(user.id(), conn)?;
 
-    let user = user.log_in_local(auth, create_plaintext_password(password)?)?;
+    let user = user
+        .log_in_local(auth, create_plaintext_password(password)?)?;
 
     Ok(user)
 }

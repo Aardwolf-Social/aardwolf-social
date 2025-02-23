@@ -1,13 +1,11 @@
 use aardwolf_types::forms::personas::{
-    PersonaCreationFormState, ValidateDisplayNameFail, ValidateFollowPolicyFail,
-    ValidateIsSearchableFail, ValidatePersonaCreationFail, ValidateShortnameFail,
+    PersonaCreationFormState, ValidateDisplayNameFail, ValidateFollowPolicyFail, ValidateIsSearchableFail, ValidatePersonaCreationFail, ValidateShortnameFail
 };
 use gettext::Catalog;
+use rust_i18n::i18n;
+i18n!("locales", fallback = "en");
 
-use crate::elements::{
-    alert::{Alert, AlertKind},
-    input, input_select,
-};
+use crate::elements::{alert::{Alert, AlertKind}, input, input_select};
 
 pub struct FirstLogin<'a> {
     pub catalog: &'a Catalog,
@@ -22,7 +20,7 @@ pub struct FirstLogin<'a> {
 
 impl<'a> FirstLogin<'a> {
     pub fn new(
-        catalog: &'a mut Catalog,
+        catalog: &'a Catalog,
         csrf_token: &'a str,
         state: &'a PersonaCreationFormState,
         validation_error: Option<&'a ValidatePersonaCreationFail>,
@@ -41,8 +39,8 @@ impl<'a> FirstLogin<'a> {
             alert,
             display_name_input: input::Input {
                 name: "display_name",
-                label: Some(t!(catalog="Display Name")),
-                placeholder: Some(t!(catalog="Display name")),
+                label: Some(i18n!(catalog, "Display Name")),
+                placeholder: Some(i18n!(catalog, "Display name")),
                 value: &state.display_name,
                 error: validation_error
                     .and_then(|e| e.display_name.as_ref())
@@ -81,14 +79,14 @@ impl<'a> FirstLogin<'a> {
                 selected: state.default_visibility.to_string(),
                 options: input_select::InputSelect::with_visibility_options(catalog).options,
                 error: validation_error
-                    .and_then(|e| e.is_searchable.as_ref())
-                    .map(|e| match e {
-                        ValidateIsSearchableFail::SomeError => {
-                            t!(catalog, "Some error message")
-                        }
-                        ValidateIsSearchableFail::Invalid => todo!(),
-                        // Add arms for other possible values of ValidateIsSearchableFail
-                    }),
+                .and_then(|e| e.is_searchable.as_ref())
+                .map(|e| match e {
+                    ValidateIsSearchableFail::SomeError => {
+                        t!(catalog, "Some error message")
+                    }
+                    ValidateIsSearchableFail::Invalid => todo!(),
+                    // Add arms for other possible values of ValidateIsSearchableFail
+                }),
                 selected_value: state.default_visibility.to_string(),
             },
             is_searchable_input: input::InputCheckbox {
@@ -103,7 +101,7 @@ impl<'a> FirstLogin<'a> {
                         }
                         ValidateIsSearchableFail::SomeError => {
                             t!(catalog, "Some error message")
-                        }
+                        },
                     }),
                 icon: Some("fas fa-user"),
             },
@@ -130,3 +128,4 @@ impl<'a> crate::Renderable for FirstLogin<'a> {
         crate::templates::first_login_html(writer, self)
     }
 }
+
