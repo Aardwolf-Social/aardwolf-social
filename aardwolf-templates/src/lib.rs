@@ -2,9 +2,7 @@
 #[macro_use]
 extern crate rust_i18n;
 
-// Config fallback missing translations to "en" locale.
-// Use `fallback` option to set fallback locale.
-//
+// Enable rust_i18n 
 i18n!();
 
 #[derive(Debug, Clone)]
