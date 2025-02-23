@@ -1,13 +1,12 @@
 use std::env;
 
-use chrono::{offset::Utc, DateTime};
+use chrono::{offset::Utc, DateTime, Duration as OldDuration};
 use chrono_tz::Tz;
 use diesel::{pg::PgConnection, Connection};
 use dotenvy::dotenv;
 use mime::TEXT_PLAIN;
 use openssl::rsa::Rsa;
-use rand::distr::Alphanumeric;
-use rand::Rng;
+use rand::{distributions::Alphanumeric, rngs::OsRng, Rng};
 use serde_json;
 use thiserror::Error;
 use url::Url as OrigUrl;
@@ -66,11 +65,7 @@ pub fn transmute_email_token(token: &EmailToken) -> Result<EmailVerificationToke
 }
 
 pub fn gen_string() -> String {
-    rand::rng()
-        .sample_iter(&Alphanumeric)
-        .take(10)
-        .map(char::from)
-        .collect()
+    OsRng.sample_iter(&Alphanumeric).take(10).map(char::from).collect()
 }
 
 pub fn gen_url() -> Url {
@@ -82,11 +77,15 @@ pub fn gen_url() -> Url {
 }
 
 pub fn gen_bool() -> bool {
-    rand::random()
+    OsRng.gen()
 }
 
 pub fn gen_datetime() -> DateTime<Utc> {
-    Utc::now() + chrono::Duration::hours(rand::random::<i64>())
+    let hours = OsRng.gen_range(0..=10000);
+
+    Utc::now()
+        .checked_add_signed(OldDuration::hours(hours))
+        .unwrap()
 }
 
 #[derive(Debug, Error)]
@@ -385,7 +384,8 @@ pub fn make_unverified_authenticated_user(
     let user = UnauthenticatedUser::by_id(user.id(), conn)?;
 
     let user = user
-        .log_in_local(auth, create_plaintext_password(password)?)?;
+        .log_in_local(auth, create_plaintext_password(password).unwrap())
+        .unwrap();
 
     Ok(user)
 }

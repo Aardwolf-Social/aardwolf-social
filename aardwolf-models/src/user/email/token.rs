@@ -1,14 +1,13 @@
-use std::fmt;
-
 use bcrypt::{hash, verify};
 use diesel::{backend::Backend, deserialize, serialize, sql_types::Text};
 #[cfg(any(test, feature = "test"))]
 use log::warn;
-use rand::{Rng, rngs::OsRng};
+use rand::{distr::Alphanumeric, rngs::OsRng, seq::IteratorRandom, Rng};
 use serde::{
     de::{Deserialize, Deserializer},
     ser::{Serialize, Serializer},
 };
+use std::fmt;
 use thiserror::Error;
 
 /// A trait used to verify emails
@@ -40,13 +39,18 @@ pub enum VerificationError {
 /// Email tokens should only be able to be created in certain situations, so this function must not
 /// be in scope unless it should be possible to verify an email
 pub fn create_token() -> Result<(EmailToken, HashedEmailToken), CreationError> {
-    const HASH_COST: u32 = if cfg!(any(test, feature = "test")) { 4 } else { bcrypt::DEFAULT_COST };
+    const HASH_COST: u32 = if cfg!(any(test, feature = "test")) {
+        4
+    } else {
+        bcrypt::DEFAULT_COST
+    };
 
-    let token: String = OsRng
-    .sample_iter(Alphanumeric)
-    .take(32)
-    .map(char::from)
-    .collect();
+    let token: String = (0..32)
+        .map(|_| {
+            let random_char: char = rand::random::<char>();
+            random_char
+        })
+        .collect::<String>();
 
     #[cfg(any(test, feature = "test"))]
     warn!("BUILT IN TEST MODE");
@@ -88,7 +92,7 @@ where
 impl<DB> deserialize::FromSql<Text, DB> for HashedEmailToken
 where
     DB: Backend,
-    *const str: deserialize::FromSql<diesel::sql_types::Text, DB>,
+    *const str: deserialize::FromSql<Text, DB>,
 {
     fn from_sql(bytes: <DB as Backend>::RawValue<'_>) -> deserialize::Result<Self> {
         deserialize::FromSql::<Text, DB>::from_sql(bytes).map(HashedEmailToken)
@@ -184,6 +188,9 @@ mod tests {
     fn token_creation_works() {
         let (email_token, hashed_token) = create_token().unwrap();
         assert!(!email_token.0.is_empty(), "Email token should not be empty");
-        assert!(!hashed_token.0.is_empty(), "Hashed token should not be empty");
+        assert!(
+            !hashed_token.0.is_empty(),
+            "Hashed token should not be empty"
+        );
     }
 }

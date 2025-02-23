@@ -77,12 +77,17 @@ dependencies = [
 name = "aardwolf-templates"
 version = "0.1.0"
 dependencies = [
+ "aardwolf-localization",
  "aardwolf-models",
  "aardwolf-types",
+ "aardwolf-yew-frontend",
+ "config",
  "gettext",
  "gettext-macros",
+ "gettext-utils",
  "ructe",
  "rust-i18n",
+ "syn 2.0.98",
 ]
 
 [[package]]
