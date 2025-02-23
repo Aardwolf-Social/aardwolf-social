@@ -5,7 +5,6 @@
 # Ignore envrionment/OS files
 .DS_Store/
 .vscode/
-.idea/
 .qodo/
 
 # This is used for Docker
@@ -32,6 +31,7 @@ aardwolf.toml
 aardwolf.log
 diesel.toml
 .config
+
 
 # Translations
 **/*.po~
