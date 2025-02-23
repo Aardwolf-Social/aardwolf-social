@@ -8,6 +8,5 @@ pub mod notification_content;
 pub mod notification_dropdown;
 pub mod search_bar;
 
-pub use notification_dropdown::NotificationDropdown;
 pub use lang_dropdown::LangDropdown;
-
+pub use notification_dropdown::NotificationDropdown;
