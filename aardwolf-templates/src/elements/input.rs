@@ -8,6 +8,20 @@ pub struct Input<'a> {
     pub(crate) error: Option<String>,
 }
 
+impl<'a> Input<'a> {
+    pub fn new(name: &str, value: String, errors: Vec<String>) -> Self {
+        Input {
+            kind: "",
+            name: &*name.to_string(),
+            label: None,
+            icon: None,
+            placeholder: None,
+            value,
+            error: None,
+        }
+    }
+}
+
 impl<'a> From<&'a InputPassword<'a>> for Input<'a> {
     fn from(p: &'a InputPassword<'a>) -> Self {
         Input {
@@ -54,6 +68,7 @@ pub struct InputPassword<'a> {
     pub(crate) name: &'a str,
     pub(crate) label: String,
     pub(crate) placeholder: Option<String>,
+    pub(crate) value: &'a str,
     pub(crate) error: Option<String>,
 }
 
@@ -61,6 +76,7 @@ pub struct InputPasswordConfirm<'a> {
     pub(crate) name: &'a str,
     pub(crate) label: String,
     pub(crate) placeholder: Option<String>,
+    pub(crate) value: &'a str,
     pub(crate) error: Option<String>,
 }
 

@@ -30,12 +30,14 @@ pub enum SignInPasswordValidationFail {
 
 pub struct SignInFormState {
     pub email: String,
+    pub password: String,
 }
 
 impl Default for SignInFormState {
     fn default() -> Self {
         SignInFormState {
             email: "".to_owned(),
+            password: "".to_string(),
         }
     }
 }
@@ -51,6 +53,7 @@ impl SignInForm {
     pub fn as_state(&self) -> SignInFormState {
         SignInFormState {
             email: self.email.clone(),
+            password: "".to_string(),
         }
     }
 }

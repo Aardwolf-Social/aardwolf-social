@@ -79,12 +79,11 @@ version = "0.1.0"
 dependencies = [
  "aardwolf-models",
  "aardwolf-types",
- "config",
  "gettext",
  "gettext-macros",
+ "log",
  "ructe",
  "rust-i18n",
- "rust-i18n-macro",
 ]
 
 [[package]]
