@@ -7,7 +7,7 @@ use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 async fn get_posts() -> impl Responder {
     // Logic to retrieve a list of posts (replace this with actual implementation)
     let posts = vec!["Post 1", "Post 2", "Post 3"]; // Sample posts
-    
+
     HttpResponse::Ok().json(posts)
 }
 async fn create_post() -> impl Responder {

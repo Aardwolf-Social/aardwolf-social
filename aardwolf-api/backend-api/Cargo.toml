@@ -1,4 +1,24 @@
 [package]
 name = "aardwolf-api-backend"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
+authors = ["BanjoFox <drbanjofox@protonmail.com>"]
+description = "Backend API for Aardwolf"
+license = "AGPL-3"
+documentation = "https://docs.rs/aardwolf-api-backend"
+repository = "https://github.com/SlantyDog/aardwolf-api"
+
+[dependencies]
+# Internal Dependencies
+aardwolf-api-common = { path = "../aardwolf-api-common" }
+
+# External Dependencies
+actix-web = { version = "4.10.2", features = ["openssl", "rustls"], optional = true }
+warp = { version = "0.3", optional = true }
+tokio = { version = "1.44.1", features = ["rt", "rt-multi-thread", "macros"] }
+serde = { version = "1.0.219", features = ["derive"] }
+chrono = "0.4.40"
+
+[features]
+default = ["actix-web"]
+warp-backend = ["warp"]
