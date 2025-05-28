@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 pub struct Input<'a> {
     pub(crate) kind: &'a str,
     pub(crate) name: &'a str,
@@ -94,6 +96,18 @@ pub struct InputCheckbox<'a> {
     pub(crate) icon: Option<&'a str>,
     pub(crate) checked: bool,
     pub(crate) error: Option<String>,
+}
+
+impl<'a> InputCheckbox<'a> {
+    pub fn new(name: &'a str, checked: bool, label: impl Into<Cow<'a, str>>) -> Self {
+        Self {
+            name,
+            label: label.into().parse().unwrap(),
+            icon: None,
+            checked,
+            error: None,
+        }
+    }
 }
 
 pub enum InputKind {

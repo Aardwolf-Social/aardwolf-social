@@ -2,12 +2,14 @@
 # Mold Linker for linux (replaces LLD)
 # New format
 [target.x86_64-unknown-linux-gnu]
-rustflags = ["-C", "link-arg=-fuse-ld=mold"]
+linker = "clang"
+rustflags = ["-C", "link-arg=-fuse-ld=/usr/local/bin/mold"]
 
 # Syntax for older GCC
 #[target.x86_64-unknown-linux-gnu]
 #linker = "clang"
 #rustflags = ["-C", "link-arg=-fuse-ld=/path/to/mold"]
+#DefaultPath: /usr/local/bin/mold
 
 [env]
 OUT_DIR = "/compiled-templates"
