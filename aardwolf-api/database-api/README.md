@@ -1,6 +1,7 @@
 # Placeholder for database API code
 
 Some endpoint suggestions:
+
 ```
 GET /api/db/users: Retrieve all users from the database.
 POST /api/db/users: Add a new user to the database.

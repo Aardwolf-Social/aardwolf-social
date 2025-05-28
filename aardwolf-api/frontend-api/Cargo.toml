@@ -1,4 +1,11 @@
 [package]
 name = "aardwolf-api-frontend"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
+
+[dependencies]
+# Internal Dependencies
+aardwolf-api-common = { path = "../aardwolf-api-common" }
+actix-web = "4.10.2"
+
+# External Dependencies

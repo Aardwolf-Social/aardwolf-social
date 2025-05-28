@@ -1,0 +1,11 @@
+[backend]
+engine = "actix"
+use_trait_objects = true  # Set to false for simpler struct-based approach
+
+[actix]
+host = "localhost"
+port = 8080
+
+[warp]
+host = "localhost"
+port = 8081
