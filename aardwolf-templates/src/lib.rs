@@ -1,10 +1,7 @@
 // Load I18n macro, for allow you to use `t!` macro in anywhere.
 #[macro_use]
 extern crate rust_i18n;
-
-// Enable rust_i18n 
-i18n!();
-
+i18n!("locales", fallback = "en");
 #[derive(Debug, Clone)]
 pub struct Translations {
     locale: Cow<'static, str>,
@@ -18,13 +15,12 @@ impl Translations {
     }
 
     pub fn get(&self, key: &str) -> Cow<'static, str> {
-        match rust_i18n::t!(key, locale = self.locale.as_ref()) {
-            Ok(s) => s.into(),
-            Err(e) => {
+        rust_i18n::t!(key, locale = self.locale.as_ref())
+            .unwrap_or_else(|e| {
                 eprintln!("Failed to translate key '{}': {}", key, e);
-                key.into()
-            }
-        }
+                key
+            })
+            .into()
     }
 
     pub fn get_or_fallback(&self, key: &str, default: &str) -> Cow<'static, str> {

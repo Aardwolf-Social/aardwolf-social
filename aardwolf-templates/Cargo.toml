@@ -6,13 +6,13 @@ edition = "2021"
 build = "build.rs"
 
 [build-dependencies]
-config = "0.15.7"
 ructe = "0.18.2"
 
 [dependencies]
 gettext = "0.4.0"
 gettext-macros = "0.6.1"
 rust-i18n = { version = "3.1.2", features = ["log-miss-tr"] }
+log = "0.4.17"
 
 [dependencies.aardwolf-types]
 version = "0.1"

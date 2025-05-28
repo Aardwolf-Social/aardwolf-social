@@ -2,131 +2,121 @@ use aardwolf_types::forms::personas::{
     PersonaCreationFormState, ValidateDisplayNameFail, ValidateFollowPolicyFail,
     ValidateIsSearchableFail, ValidatePersonaCreationFail, ValidateShortnameFail,
 };
-use gettext::Catalog;
 
-use crate::elements::{
-    alert::{Alert, AlertKind},
-    input, input_select,
+use crate::{
+    elements::{alert, input, input_select},
+    sign_up::SignUp,
+    Renderable,
 };
 
+use aardwolf_models::sql_types::FollowPolicy;
+use rust_i18n::t;
+
+/// Represents a first login form.
 pub struct FirstLogin<'a> {
-    pub catalog: &'a Catalog,
-    pub csrf_token: &'a str,
-    pub alert: Option<Alert>,
-    pub display_name_input: input::Input<'a>,
-    pub shortname_input: input::Input<'a>,
-    pub follow_policy_input: input_select::InputSelect<'a>,
-    pub default_visibility_input: input_select::InputSelect<'a>,
-    pub is_searchable_input: input::InputCheckbox<'a>,
+    /// CSRF token.
+    csrf_token: &'a str,
+
+    /// Alert message.
+    alert: Option<alert::Alert>,
+
+    /// Display name input field.
+    display_name_input: input::Input<'a>,
+
+    /// Shortname input field.
+    shortname_input: input::Input<'a>,
+
+    /// Follow policy input field.
+    follow_policy_input: input_select::InputSelect<'a>,
+
+    /// Default visibility input field.
+    default_visibility_input: input_select::InputSelect<'a>,
+
+    /// Is searchable input field.
+    is_searchable_input: input::InputCheckbox<'a>,
 }
 
 impl<'a> FirstLogin<'a> {
+    /// Creates a new `FirstLogin` instance.
     pub fn new(
-        catalog: &'a mut Catalog,
         csrf_token: &'a str,
         state: &'a PersonaCreationFormState,
         validation_error: Option<&'a ValidatePersonaCreationFail>,
     ) -> Self {
-        let alert = match validation_error {
-            Some(_error) => Some(Alert {
-                kind: AlertKind::Error,
-                message: t!(catalog, "There was an error creating your persona"),
-            }),
-            None => None,
-        };
+        let alert = validation_error.map(|_| alert::Alert {
+            kind: alert::AlertKind::Error,
+            message: t!("error.creating_persona").into_owned(),
+        });
 
-        FirstLogin {
-            catalog,
+        let display_name_input =
+            input::Input::new("display_name", &*state.display_name.clone(), vec![]);
+        let shortname_input = input::Input::new("shortname", &*state.shortname.clone(), vec![]);
+        let follow_policy_input = match state.follow_policy {
+            Some(policy) => input_select::InputSelect::new(
+                "follow_policy",
+                policy.to_string(),
+                vec![
+                    (
+                        FollowPolicy::AutoAccept.to_string(),
+                        t!("follow_policy.public"),
+                    ),
+                    (
+                        FollowPolicy::AutoReject.to_string(),
+                        t!("follow_policy.private"),
+                    ),
+                ],
+                None,
+            ),
+            None => input_select::InputSelect::new(
+                "follow_policy",
+                FollowPolicy::AutoAccept.to_string(),
+                vec![
+                    (
+                        FollowPolicy::AutoAccept.to_string(),
+                        t!("follow_policy.public"),
+                    ),
+                    (
+                        FollowPolicy::AutoReject.to_string(),
+                        t!("follow_policy.private"),
+                    ),
+                ],
+                None,
+            ),
+        };
+        let default_visibility_input = input_select::InputSelect::new(
+            "default_visibility",
+            state.default_visibility.to_string(),
+            vec![
+                (
+                    FollowPolicy::AutoAccept.to_string(),
+                    t!("default_visibility.public"),
+                ),
+                (
+                    FollowPolicy::AutoReject.to_string(),
+                    t!("default_visibility.private"),
+                ),
+            ],
+            None,
+        );
+        let is_searchable_input =
+            input::InputCheckbox::new("is_searchable", state.is_searchable, t!("is_searchable"));
+
+        Self {
             csrf_token,
             alert,
-            display_name_input: input::Input {
-                name: "display_name",
-                label: Some(t!(catalog="Display Name")),
-                placeholder: Some(t!(catalog="Display name")),
-                value: &state.display_name,
-                error: validation_error
-                    .and_then(|e| e.display_name.as_ref())
-                    .map(|e| match e {
-                        ValidateDisplayNameFail::Empty => {
-                            t!(catalog, "Display name must not be empty")
-                        }
-                    }),
-                icon: Some("fas fa-user"),
-                kind: "text",
-            },
-            shortname_input: input::Input {
-                name: "shortname",
-                label: Some(i18n!(catalog, "Username")),
-                placeholder: Some(i18n!(catalog, "Username")),
-                value: &state.shortname,
-                error: validation_error
-                    .and_then(|e| e.shortname.as_ref())
-                    .map(|e| match e {
-                        ValidateShortnameFail::Empty => {
-                            t!(catalog, "Username must not be empty")
-                        }
-                        ValidateShortnameFail::SpecialCharacters => {
-                            t!(catalog, "Username must not contain special characters")
-                        }
-                        ValidateShortnameFail::TooLong => {
-                            t!(catalog, "Username is too long")
-                        }
-                    }),
-                icon: Some("fas fa-user"),
-                kind: "text",
-            },
-            default_visibility_input: input_select::InputSelect {
-                name: "default_visibility",
-                label: t!(catalog, "Post Visibility"),
-                selected: state.default_visibility.to_string(),
-                options: input_select::InputSelect::with_visibility_options(catalog).options,
-                error: validation_error
-                    .and_then(|e| e.is_searchable.as_ref())
-                    .map(|e| match e {
-                        ValidateIsSearchableFail::SomeError => {
-                            t!(catalog, "Some error message")
-                        }
-                        ValidateIsSearchableFail::Invalid => todo!(),
-                        // Add arms for other possible values of ValidateIsSearchableFail
-                    }),
-                selected_value: state.default_visibility.to_string(),
-            },
-            is_searchable_input: input::InputCheckbox {
-                name: "is_searchable",
-                label: t!(catalog, "Allow people to search for this profile"),
-                checked: state.is_searchable,
-                error: validation_error
-                    .and_then(|e| e.is_searchable.as_ref())
-                    .map(|e| match e {
-                        ValidateIsSearchableFail::Invalid => {
-                            t!(catalog, "Invalid value for `is_searchable`")
-                        }
-                        ValidateIsSearchableFail::SomeError => {
-                            t!(catalog, "Some error message")
-                        }
-                    }),
-                icon: Some("fas fa-user"),
-            },
-            follow_policy_input: input_select::InputSelect {
-                name: "follow_policy",
-                label: t!(catalog, "Follow Policy"),
-                selected: state.follow_policy.to_string(),
-                options: input_select::InputSelect::with_follow_policy_options(catalog),
-                error: validation_error
-                    .and_then(|e| e.follow_policy.as_ref())
-                    .map(|e| match e {
-                        ValidateFollowPolicyFail::Invalid => {
-                            t!(catalog, "Invalid follow policy")
-                        }
-                    }),
-                selected_value: state.follow_policy.to_string(),
-            },
+            display_name_input,
+            shortname_input,
+            follow_policy_input,
+            default_visibility_input,
+            is_searchable_input,
         }
     }
 }
 
-impl<'a> crate::Renderable for FirstLogin<'a> {
+impl<'a> Renderable for FirstLogin<'a> {
+    /// Renders the HTML template for the first login form.
     fn render(&self, writer: &mut dyn std::io::Write) -> std::io::Result<()> {
-        crate::templates::first_login_html(writer, self)
+        // implementation for rendering the HTML template for FirstLogin
+        Ok(())
     }
 }

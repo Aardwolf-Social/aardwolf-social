@@ -2,7 +2,6 @@ use bcrypt::{hash, verify};
 use diesel::{backend::Backend, deserialize, serialize, sql_types::Text};
 #[cfg(any(test, feature = "test"))]
 use log::warn;
-use rand::{distr::Alphanumeric, rngs::OsRng, seq::IteratorRandom, Rng};
 use serde::{
     de::{Deserialize, Deserializer},
     ser::{Serialize, Serializer},

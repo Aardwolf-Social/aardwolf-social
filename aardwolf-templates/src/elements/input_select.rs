@@ -40,7 +40,7 @@ impl<'a> InputSelect<'a> {
     pub fn with_visibility_options(catalog: &'a Catalog) -> Self {
         Self {
             name: "visibility",
-            label: t!(catalog, "Post visibility"),
+            label: t!("Post visibility"),
             selected_value: PostVisibility::Public.to_string(),
             options: visibility_options(catalog),
             error: None,
@@ -59,15 +59,15 @@ fn follow_policy_options(catalog: &Catalog) -> Vec<SelectOption<'_>> {
     vec![
         SelectOption {
             value: FollowPolicy::AutoAccept.into(),
-            display: t!(catalog, "Automatically accept new followers"),
+            display: t!("Automatically accept new followers"),
         },
         SelectOption {
             value: FollowPolicy::AutoReject.into(),
-            display: t!(catalog, "Automatically reject new followers"),
+            display: t!("Automatically reject new followers"),
         },
         SelectOption {
             value: FollowPolicy::ManualReview.into(),
-            display: t!(catalog, "Manually review new followers"),
+            display: t!("Manually review new followers"),
         },
     ]
 }
@@ -76,19 +76,19 @@ fn visibility_options(catalog: &Catalog) -> Vec<SelectOption<'_>> {
     vec![
         SelectOption {
             value: PostVisibility::Public.into(),
-            display: t!(catalog, "Visible to everyone"),
+            display: t!("Visible to everyone"),
         },
         SelectOption {
             value: PostVisibility::FollowersOnly.into(),
-            display: t!(catalog, "Visible to followers"),
+            display: t!("Visible to followers"),
         },
         SelectOption {
             value: PostVisibility::FriendsOnly.into(),
-            display: t!(catalog, "Visible to mutuals"),
+            display: t!("Visible to mutuals"),
         },
         SelectOption {
             value: PostVisibility::ListedPeopleOnly.into(),
-            display: t!(catalog, "Only visible to mentioned users"),
+            display: t!("Only visible to mentioned users"),
         },
     ]
 }

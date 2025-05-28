@@ -10,9 +10,9 @@
 
 ---
 
-<p align="center">
+<div style="align-content: center">
   <img alt="Aardwolf Social: Powering connected social communities with open software" src="/doc/images/aardwolf-banner_solid-bg.png" />
-</p>
+</div>
 
 ## 🌐 About Aardwolf Social
 
@@ -26,43 +26,42 @@
 
 ## 📂 Project Structure
 
-| Folder/File                  | Description                                       |
-|------------------------------|---------------------------------------------------|
-| `.github/`                    | CI/CD Files related to GitHub                     |
-| `aardwolf-actix/`             | The Actix backend Rust application code           |
-| `aardwolf-models/`            | Web app models and database setup files           |
-| `aardwolf-templates/`         | Legacy frontend files                             |
-| `aardwolf-test-helpers/`      | Development functional test code                  |
-| `aardwolf-types/`             | Additional web app components                     |
-| `aardwolf-yew-frontend/`      | The Yew frontend application code                 |
-| `config/`                     | Aardwolf Social app configuration files           |
-| `doc/`                        | Documentation                                     |
-| `docker/`                     | Docker files                                      |
-| `po/`                         | Legacy directory for i18n translations            |
-| `src/`                        | The source directory for the main app             |
-| `tests/`                      | Code validation and coverage tests                |
-| `build.rs`                    | Rust code that directs Cargo build                |
-| `Cargo.lock`                  | Complete manifest of all Rust crates used         |
-| `Cargo.toml`                  | Manifest of crates required to build Aardwolf     |
-| `CODE_OF_CONDUCT.md`          | Our Code of Conduct rules                         |
-| `db-init.sh`                  | Part of the setup/install scripts                 |
-| `diesel.toml`                 | Tells Diesel where to find the SQL migrations     |
-| `LICENSE`                     | The license we use for this software              |
-| `README.md`                   | The file you are presently reading                |
-| `ROADMAP.md`                  | Our development roadmap                           |
-| `rust-toolchain.toml`         | Specifies the Rust version for the dev environment|
-| `SECURITY.md`                 | Future info for security updates                  |
-| `translations/`               | Translations directory (links to `aardwolf-templates`) |
-
+| Folder/File              | Description                                            |
+|--------------------------|--------------------------------------------------------|
+| `.github/`               | CI/CD Files related to GitHub                          |
+| `aardwolf-actix/`        | The Actix backend Rust application code                |
+| `aardwolf-models/`       | Web app models and database setup files                |
+| `aardwolf-templates/`    | Legacy frontend files                                  |
+| `aardwolf-test-helpers/` | Development functional test code                       |
+| `aardwolf-types/`        | Additional web app components                          |
+| `aardwolf-yew-frontend/` | The Yew frontend application code                      |
+| `config/`                | Aardwolf Social app configuration files                |
+| `doc/`                   | Documentation                                          |
+| `docker/`                | Docker files                                           |
+| `po/`                    | Legacy directory for i18n translations                 |
+| `src/`                   | The source directory for the main app                  |
+| `tests/`                 | Code validation and coverage tests                     |
+| `build.rs`               | Rust code that directs Cargo build                     |
+| `Cargo.lock`             | Complete manifest of all Rust crates used              |
+| `Cargo.toml`             | Manifest of crates required to build Aardwolf          |
+| `CODE_OF_CONDUCT.md`     | Our Code of Conduct rules                              |
+| `db-init.sh`             | Part of the setup/install scripts                      |
+| `diesel.toml`            | Tells Diesel where to find the SQL migrations          |
+| `LICENSE`                | The license we use for this software                   |
+| `README.md`              | The file you are presently reading                     |
+| `ROADMAP.md`             | Our development roadmap                                |
+| `rust-toolchain.toml`    | Specifies the Rust version for the dev environment     |
+| `SECURITY.md`            | Future info for security updates                       |
+| `translations/`          | Translations directory (links to `aardwolf-templates`) |
 ---
 
 ## 🌍 Screenshot of Aardwolf Social
 
 Check out a preview of the homepage design below! This static demo showcases our design approach and upcoming features.
 
-<p align="center">
+<div style="align-content: center">
   <img alt="Aardwolf Social: Powering connected social communities with open software" src="/doc/images/homepage-demo.png" />
-</p>
+</div>
 
 ---
 
