@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 pub struct Input<'a> {
     pub(crate) kind: &'a str,
     pub(crate) name: &'a str,
@@ -9,15 +11,26 @@ pub struct Input<'a> {
 }
 
 impl<'a> Input<'a> {
-    pub fn new(name: &str, value: String, errors: Vec<String>) -> Self {
+    /// # Arguments
+    ///
+    /// * `name`: The name of the input field.
+    /// * `value`: The initial value of the input field.
+    /// * `errors`: A list of error messages associated with the input field.
+    pub fn new(name: &'a str, value: &'a str, errors: Vec<String>) -> Self {
+        let error = if !errors.is_empty() {
+            Some(errors.join(", "))
+        } else {
+            None
+        };
+
         Input {
             kind: "",
-            name: &*name.to_string(),
+            name,
             label: None,
             icon: None,
             placeholder: None,
             value,
-            error: None,
+            error,
         }
     }
 }
@@ -94,6 +107,18 @@ pub struct InputCheckbox<'a> {
     pub(crate) icon: Option<&'a str>,
     pub(crate) checked: bool,
     pub(crate) error: Option<String>,
+}
+
+impl<'a> InputCheckbox<'a> {
+    pub fn new(name: &'a str, checked: bool, label: impl Into<Cow<'a, str>>) -> Self {
+        Self {
+            name,
+            label: label.into().parse().unwrap(),
+            icon: None,
+            checked,
+            error: None,
+        }
+    }
 }
 
 pub enum InputKind {

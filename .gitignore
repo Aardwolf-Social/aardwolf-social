@@ -40,3 +40,4 @@ po
 
 # Compiled templates
 src/templates.rs
+.qodo

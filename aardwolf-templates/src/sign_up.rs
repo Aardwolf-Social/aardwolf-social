@@ -85,7 +85,6 @@ impl<'a> SignUp<'a> {
 
 impl<'a> Renderable for SignUp<'a> {
     fn render(&self, writer: &mut dyn std::io::Write) -> std::io::Result<()> {
-        // implementation for rendering the HTML template for SignUp
         Ok(()) // return a successful Result
     }
 }
