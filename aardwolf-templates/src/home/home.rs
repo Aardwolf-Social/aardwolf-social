@@ -7,6 +7,7 @@ use crate::{
     posts::NewPost,
     Renderable,
 };
+use crate::sign_up::SignUp;
 
 pub struct Home<'a> {
     pub catalog: &'a Catalog,
@@ -36,7 +37,8 @@ impl<'a> Home<'a> {
 }
 
 impl<'a> Renderable for Home<'a> {
-    fn render(&self, write: &mut dyn std::io::Write) -> std::io::Result<()> {
-        crate::templates::home::home_html(write, self)
+    fn render(&self, writer: &mut dyn std::io::Write) -> std::io::Result<()> {
+        Ok(()) // return a successful Result
     }
 }
+
