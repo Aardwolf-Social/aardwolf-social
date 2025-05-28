@@ -11,26 +11,15 @@ pub struct Input<'a> {
 }
 
 impl<'a> Input<'a> {
-    /// # Arguments
-    ///
-    /// * `name`: The name of the input field.
-    /// * `value`: The initial value of the input field.
-    /// * `errors`: A list of error messages associated with the input field.
-    pub fn new(name: &'a str, value: &'a str, errors: Vec<String>) -> Self {
-        let error = if !errors.is_empty() {
-            Some(errors.join(", "))
-        } else {
-            None
-        };
-
+    pub fn new(name: &str, value: String, errors: Vec<String>) -> Self {
         Input {
             kind: "",
-            name,
+            name: &*name.to_string(),
             label: None,
             icon: None,
             placeholder: None,
             value,
-            error,
+            error: None,
         }
     }
 }

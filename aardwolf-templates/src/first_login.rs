@@ -9,7 +9,6 @@ use crate::{
     Renderable,
 };
 
-use aardwolf_models::sql_types::FollowPolicy;
 use rust_i18n::t;
 
 /// Represents a first login form.
@@ -49,54 +48,29 @@ impl<'a> FirstLogin<'a> {
         });
 
         let display_name_input =
-            input::Input::new("display_name", &*state.display_name.clone(), vec![]);
-        let shortname_input = input::Input::new("shortname", &*state.shortname.clone(), vec![]);
-        let follow_policy_input = match state.follow_policy {
-            Some(policy) => input_select::InputSelect::new(
-                "follow_policy",
-                policy.to_string(),
-                vec![
-                    (
-                        FollowPolicy::AutoAccept.to_string(),
-                        t!("follow_policy.public"),
-                    ),
-                    (
-                        FollowPolicy::AutoReject.to_string(),
-                        t!("follow_policy.private"),
-                    ),
-                ],
-                None,
-            ),
-            None => input_select::InputSelect::new(
-                "follow_policy",
-                FollowPolicy::AutoAccept.to_string(),
-                vec![
-                    (
-                        FollowPolicy::AutoAccept.to_string(),
-                        t!("follow_policy.public"),
-                    ),
-                    (
-                        FollowPolicy::AutoReject.to_string(),
-                        t!("follow_policy.private"),
-                    ),
-                ],
-                None,
-            ),
-        };
-        let default_visibility_input = input_select::InputSelect::new(
-            "default_visibility",
-            state.default_visibility.to_string(),
+            input::Input::new("display_name", state.display_name.clone(), vec![]);
+        let shortname_input = input::Input::new("shortname", state.shortname.clone(), vec![]);
+        let follow_policy_input = input_select::InputSelect::new(
+            "follow_policy",
+            state.follow_policy.clone(),
             vec![
                 (
                     FollowPolicy::AutoAccept.to_string(),
-                    t!("default_visibility.public"),
+                    t!("follow_policy.public"),
                 ),
                 (
                     FollowPolicy::AutoReject.to_string(),
-                    t!("default_visibility.private"),
+                    t!("follow_policy.private"),
                 ),
             ],
-            None,
+        );
+        let default_visibility_input = input_select::InputSelect::new(
+            "default_visibility",
+            state.default_visibility.clone(),
+            vec![
+                ("public", t!("default_visibility.public")),
+                ("private", t!("default_visibility.private")),
+            ],
         );
         let is_searchable_input =
             input::InputCheckbox::new("is_searchable", state.is_searchable, t!("is_searchable"));
