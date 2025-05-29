@@ -5,7 +5,7 @@ edition = "2024"
 
 [dependencies]
 # Internal Dependencies
-aardwolf-api-common = { path = "../aardwolf-api-common" }
+aardwolf-api-common = { path = "../api-common" }
 actix-web = "4.10.2"
 
 # External Dependencies

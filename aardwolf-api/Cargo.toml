@@ -6,7 +6,7 @@ description = "Backend API for Aardwolf"
 edition = "2024"
 
 [dependencies]
-aardwolf-api-common = { path = "aardwolf-api-common" }
-aardwolf-backend-api = { path ="backend-api" }
-aardwolf-database-api = { path = "database-api" }
-aardwolf-frontend-api = { path = "frontend-api" }
+aardwolf-api-common = { path = "api-common" }
+aardwolf-api-backend = { path ="api-backend" }
+aardwolf-api-database = { path = "api-database" }
+aardwolf-api-frontend = { path = "api-frontend" }
