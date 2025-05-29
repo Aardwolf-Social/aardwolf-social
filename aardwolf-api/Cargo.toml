@@ -1,9 +1,6 @@
 [package]
 name = "aardwolf-api"
 version = "0.1.0"
-<<<<<<< HEAD
-edition = "2021"
-=======
 edition = "2024"
 
 [workspace]
@@ -22,4 +19,3 @@ panic = "unwind"
 
 [profile.release]
 panic = "unwind"
->>>>>>> d1b24ddd5f52965698d08e47af9333a61cbcc526
