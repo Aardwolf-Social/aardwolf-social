@@ -3,7 +3,7 @@ name = "aardwolf"
 version = "0.1.0"
 authors = ["Banjo Fox <drbanjofox@protonmail.com>","Elijah Mark Anderson <kd0bpv@gmail.com>", "Paul Woolcock <paul@woolcock.us>", "asonix <asonix@asonix.dog>", "Nicholas Guyett <nicholas@guyett.me>"]
 description = "Powering connected social communities with free software."
-edition = "2021"
+edition = "2024"
 
 [workspace]
 members = [

@@ -1,18 +1,15 @@
 [package]
 name = "aardwolf-api"
 version = "0.1.0"
+authors = ["Banjo Fox <drbanjofox@protonmail.com>"]
+description = "Backend API for Aardwolf"
 edition = "2024"
-
-[workspace]
-members = [
-    "aardwolf-api-common",
-    "backend-api",
-    "database-api",
-    "frontend-api",
-]
 
 [dependencies]
 aardwolf-api-common = { path = "aardwolf-api-common" }
+backend-api = { path ="backend-api" }
+database-api = { path = "database-api" }
+frontend-api = { path = "frontend-api" }
 
 [profile.dev]
 panic = "unwind"
