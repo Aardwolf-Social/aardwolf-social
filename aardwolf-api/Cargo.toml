@@ -7,12 +7,6 @@ edition = "2024"
 
 [dependencies]
 aardwolf-api-common = { path = "aardwolf-api-common" }
-backend-api = { path ="backend-api" }
-database-api = { path = "database-api" }
-frontend-api = { path = "frontend-api" }
-
-[profile.dev]
-panic = "unwind"
-
-[profile.release]
-panic = "unwind"
+aardwolf-backend-api = { path ="backend-api" }
+aardwolf-database-api = { path = "database-api" }
+aardwolf-frontend-api = { path = "frontend-api" }
