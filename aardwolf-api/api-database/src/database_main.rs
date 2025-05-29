@@ -1,13 +1,13 @@
 // aardwolf-api/database-api/src/database_main.rs
 //
-use crate::database_main::DatabaseConnection::MysqlConnection;
-use crate::postgres::PgConnection;
-use crate::sqlite::SqliteConnection;
+use diesel::pg::PgConnection;
+use mysql::Conn; // MySqlConnection
+use diesel::sqlite::SqliteConnection;
 
 pub enum DatabaseConnection {
     PgConnection(PgConnection),
-    MysqlConnection(MysqlConnection),
     SqliteConnection(SqliteConnection),
+    MysqlConnection(mysql::Conn), // Since diesel doesn't support MySQL
 }
 
 pub trait MyConnection {

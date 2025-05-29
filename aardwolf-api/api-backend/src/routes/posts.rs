@@ -1,4 +1,4 @@
-// backend-api/src/routes/posts.rs
+// api-backend/src/routes/posts.rs
 use aardwolf_api_common::models::posts::PostImpl;
 use aardwolf_api_common::Utc;
 

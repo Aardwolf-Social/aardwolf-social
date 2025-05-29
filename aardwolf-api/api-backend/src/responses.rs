@@ -1,10 +1,10 @@
-// responses.rs
+// api-backend/src/responses.rs
 pub trait Response {
     fn into_response(self) -> Self;
 }
 
 #[derive(Debug)]
-pub(crate) struct ErrorResponse {
+pub struct ErrorResponse {
     pub(crate) message: String,
 }
 
@@ -15,3 +15,12 @@ impl std::fmt::Display for ErrorResponse {
         write!(f, "{}", self.message)
     }
 }
+
+impl ErrorResponse {
+    #[allow(dead_code)]
+    pub(crate) fn new(message: String) -> Self {
+        ErrorResponse { message }
+    }
+}
+
+pub type Result<T> = std::result::Result<T, ErrorResponse>;

@@ -1,6 +1,4 @@
-//-
-// This is a starter for the Aardwolf Frontend API
-//
+// aardwolf-api/api-database/src/api_db_routes.rs
 
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 

@@ -12,9 +12,10 @@ path = "src/lib.rs"
 aardwolf-api-common = { path = "../api-common" }
 
 # External Dependencies
-diesel = { version = "2.2.10", features = ["postgres", "r2d2"] }
+diesel = { version = "2.2.10", features = ["postgres", "r2d2", "sqlite"] }
 diesel-derive-enum = "2.1.0"
 serde = { version = "1.0.218", features = ["derive"] }
+mysql = "26.0.0"
 
 [features]
 default = ["postgres"]

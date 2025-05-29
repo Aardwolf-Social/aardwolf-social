@@ -1,4 +1,4 @@
-// backend-api/src/backend_engines/actix_backend.rs
+// api-backend/src/backend_engines/actix_backend.rs
 use crate::backend_engines::actix_responses::ActixPrivateMessageReply;
 use crate::routes::posts::{create_post, get_posts};
 use aardwolf_api_common::models::direct_messages::{PrivateMessage, PrivateMessageReply};

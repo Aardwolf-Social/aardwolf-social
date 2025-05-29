@@ -1,4 +1,4 @@
-// backend-api/src/backend_engines/actix_responses.rs
+// api-backend/src/backend_engines/actix_responses.rs
 use aardwolf_api_common::models::direct_messages::PrivateMessageReply as CommonPrivateMessageReply;
 use actix_web::{Responder, HttpResponse, HttpRequest};
 use actix_web::body::BoxBody;
