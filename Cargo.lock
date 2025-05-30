@@ -78,6 +78,7 @@ version = "0.1.0"
 dependencies = [
  "aardwolf-api-common",
  "aardwolf-models",
+ "config",
  "diesel",
  "diesel-derive-enum",
  "diesel_cli",

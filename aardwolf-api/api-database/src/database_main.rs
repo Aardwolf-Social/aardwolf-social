@@ -1,31 +1,74 @@
-use diesel::mysql::MysqlConnection;
-use diesel::pg::PgConnection;
-use diesel::r2d2::ConnectionManager;
-use diesel::sqlite::SqliteConnection;
-use aardwolf_models::schema;
+use diesel::{prelude::*, r2d2};
+use diesel::r2d2::{ConnectionManager, Pool, Error};
+use config::{Config, File};
 
-pub enum DatabaseConnectionManager {
-    PgConnectionManager(ConnectionManager<PgConnection>),
-    SqliteConnectionManager(ConnectionManager<SqliteConnection>),
-    MysqlConnectionManager(ConnectionManager<MysqlConnection>),
+/// Configure database from user config
+fn configure_database() -> Result<(String, String, i32, String, String, String), config::ConfigError> {
+    let config = Config::builder()
+        .add_source(File::with_name("config.toml"))
+        .build()?;
+
+    let database_type = config.get_str("Database.type")?;
+    let host = config.get_str("Database.host")?;
+    let port = config.get_int("Database.port")?;
+    let username = config.get_str("Database.username")?;
+    let password = config.get_str("Database.password")?;
+    let database = config.get_str("Database.database")?;
+
+    Ok((database_type, host, port, username, password, database))
 }
 
-pub fn establish_connection(url: &str) -> Result<DatabaseConnectionManager, diesel::result::Error> {
-    match url {
-        url if url.starts_with("postgres://") => {
-            let manager = ConnectionManager::<PgConnection>::new(url);
-            Ok(DatabaseConnectionManager::PgConnectionManager(manager))
-        }
-        url if url.starts_with("sqlite://") => {
-            let manager = ConnectionManager::<SqliteConnection>::new(url);
-            Ok(DatabaseConnectionManager::SqliteConnectionManager(manager))
-        }
-        url if url.starts_with("mysql://") => {
-            let manager = ConnectionManager::<MysqlConnection>::new(url);
-            Ok(DatabaseConnectionManager::MysqlConnectionManager(manager))
-        }
-        _ => Err(diesel::result::Error::QueryBuilderError(
-            Box::new(std::io::Error::new(std::io::ErrorKind::Other, "Invalid connection URL")),
-        )),
+/// Trait for database operations
+pub trait DbConnection: Sized {
+    /// Execute a query on the database
+    fn execute(&self, query: &str) -> Result<(), diesel::result::Error>;
+
+    /// Begin a test transaction
+    fn begin_test_transaction(&self) -> Result<(), diesel::result::Error>;
+
+    /// Commit a test transaction
+    fn test_transaction(&self) -> Result<(), diesel::result::Error>;
+}
+
+/// Connection pool for managing database connections
+pub struct ConnectionPool<DB: diesel::Connection + r2d2::R2D2Connection + 'static> {
+    pool: Pool<ConnectionManager<DB>>,
+}
+
+impl<DB: diesel::Connection + r2d2::R2D2Connection + 'static> ConnectionPool<DB> {
+    /// Create a new connection pool
+    pub fn new(database_url: &str) -> Result<Self, Error> {
+        let manager = ConnectionManager::<DB>::new(database_url);
+        let pool = Pool::builder()
+            .connection_customizer(Box::new(|conn: DB| {
+                conn.execute("SET TIME ZONE 'UTC';").unwrap();
+                conn
+            }))
+            .build(manager)?;
+
+        Ok(ConnectionPool { pool })
+    }
+
+    /// Get a connection from the pool
+    pub fn get(&self) -> Result<DB, Error> {
+        self.pool.get()
+    }
+}
+
+impl<DB: diesel::Connection + r2d2::R2D2Connection + 'static> DbConnection for ConnectionPool<DB> {
+    fn execute(&self, query: &str) -> Result<(), diesel::result::Error> {
+        let conn = self.get()?;
+        diesel::sql_query(query).execute(&*conn)?;
+        Ok(())
+    }
+
+    fn begin_test_transaction(&self) -> Result<(), diesel::result::Error> {
+        let conn = self.get()?;
+        conn.begin_test_transaction()
+    }
+
+    fn test_transaction(&self) -> Result<(), diesel::result::Error> {
+        let conn = self.get()?;
+        conn.test_transaction()
     }
 }

@@ -3,8 +3,8 @@ use crate::database_main::DatabaseConnectionManager;
 use crate::traits::db_handler::DbHandler;
 use aardwolf_api_common::models::error::ErrorImpl;
 use aardwolf_api_common::models::posts::PostImpl;
-use diesel::prelude::*;
 use aardwolf_models::schema::posts::dsl::*;
+use diesel::prelude::*;
 
 pub struct MySqlHandler {
     connection: DatabaseConnectionManager,
@@ -20,8 +20,6 @@ impl DbHandler for MySqlHandler {
     type PostError = ErrorImpl;
 
     fn get_posts(&self) -> Result<Vec<PostImpl>, ErrorImpl> {
-        use crate::aardwolf_models::schema::posts::dsl::*;
-
         let mut conn = self.connection.get()?;
         posts
             .load::<PostImpl>(&mut conn)

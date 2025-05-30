@@ -30,7 +30,6 @@ port = 8080
 # Database.type - Specifies what kind of database we're connecting to. Valid values are:
 #   postgres | postgresql - Aardwolf will connect to a PostgreSQL server
 #   mysql                 - Aardwolf will connect to a MySQL server (WIP)
-
 type = "postgresql"
 #
 # Database.host - The ip address of the machine hosting the database.

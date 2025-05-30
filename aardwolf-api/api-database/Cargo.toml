@@ -8,17 +8,15 @@ name = "aardwolf_api_database"
 path = "src/lib.rs"
 
 [dependencies]
-# Internal Dependencies
-aardwolf-api-common = { path = "../api-common" }
-aardwolf_models = { path = "../aardwolf-models" }
-
-# External Dependencies
 diesel = { version = "2.2.10", features = ["r2d2", "postgres", "sqlite", "mysql"] }
 diesel-derive-enum = "2.1.0"
 diesel_cli = { version = "2.2.10", features = ["postgres", "sqlite", "mysql"] }
 serde = { version = "1.0.218", features = ["derive"] }
 mysql = "26.0.0"
+config = "0.15.11"
 
+[dependencies.aardwolf-api-common]
+path = "../api-common"
 
 [dependencies.aardwolf-models]
 version = "0.1"
