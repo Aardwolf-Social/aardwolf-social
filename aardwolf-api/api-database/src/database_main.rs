@@ -1,19 +1,20 @@
-use diesel::{prelude::*, r2d2};
-use diesel::r2d2::{ConnectionManager, Pool, Error};
 use config::{Config, File};
+use diesel::r2d2::{ConnectionManager, Error, Pool};
+use diesel::{prelude::*, r2d2};
 
 /// Configure database from user config
-fn configure_database() -> Result<(String, String, i32, String, String, String), config::ConfigError> {
+fn configure_database() -> Result<(String, String, i32, String, String, String), config::ConfigError>
+{
     let config = Config::builder()
         .add_source(File::with_name("config.toml"))
         .build()?;
 
-    let database_type = config.get_str("Database.type")?;
-    let host = config.get_str("Database.host")?;
-    let port = config.get_int("Database.port")?;
-    let username = config.get_str("Database.username")?;
-    let password = config.get_str("Database.password")?;
-    let database = config.get_str("Database.database")?;
+    let database_type: String = config.get("Database.type").unwrap().into();
+    let host: String = config.get("Database.host").unwrap().into();
+    let port: i32 = config.get("Database.port").unwrap().into();
+    let username: String = config.get("Database.username").unwrap().into();
+    let password: String = config.get("Database.password").unwrap().into();
+    let database: String = config.get("Database.database").unwrap().into();
 
     Ok((database_type, host, port, username, password, database))
 }
