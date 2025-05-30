@@ -16,6 +16,7 @@ pub struct PostImpl {
     pub content: String,
     pub created_at: String,
     pub updated_at: String,
+    pub author: String,
 }
 
 impl Post for PostImpl {
@@ -44,8 +45,9 @@ pub fn get_posts() -> Vec<PostImpl> {
     vec![PostImpl {
         id: 1,
         title: "Example Post".to_string(),
-        content: "Hello, world!".to_string(),
+        content: "Awoo!".to_string(),
         created_at: "2025-03-07T12:00:00Z".to_string(),
         updated_at: "2025-03-07T12:30:00Z".to_string(),
+        author: "Aardy Wolfe".to_string(),
     }]
 }

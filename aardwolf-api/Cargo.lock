@@ -39,7 +39,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aardwolf-database-api"
+name = "aardwolf-api-database"
 version = "0.1.0"
 dependencies = [
  "aardwolf-api-common",

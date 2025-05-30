@@ -1,5 +1,4 @@
-// database-api/src/lib.rs
-pub mod connection_pool;
+// api-database/src/lib.rs
 pub mod database_main;
 pub mod traits{
     pub mod db_handler;

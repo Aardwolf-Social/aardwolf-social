@@ -1,70 +1,93 @@
-// aardwolf-api/database-api/src/mysql/mysql_main.rs
-
-use crate::database::MyConnection;
-use crate::databases::mysql;
+// aardwolf-api/api-database/src/mysql/mysql_main.rs
+use crate::database_main::DatabaseConnectionManager;
 use crate::traits::db_handler::DbHandler;
-
-pub(crate) use diesel::mysql::MysqlConnection;
+use aardwolf_api_common::models::error::ErrorImpl;
+use aardwolf_api_common::models::posts::PostImpl;
+use diesel::prelude::*;
+use aardwolf_models::schema::posts::dsl::*;
 
 pub struct MySqlHandler {
-    connection: mysql::PooledConn,
-    pool: mysql::Pool,
-    connection_url: String,
-    is_active: bool,
-    schema: Vec<String>,
+    connection: DatabaseConnectionManager,
 }
 
-impl MyConnection for MysqlConnection {
-    fn execute_query(&self, query: &str) -> Result<(), diesel::result::Error> {
-        // implementation for MySQL
-    }
-
-    fn execute_transaction(&self, transaction: &str) -> Result<(), diesel::result::Error> {
-        // implementation for MySQL
+impl MySqlHandler {
+    pub fn new(connection: DatabaseConnectionManager) -> Self {
+        MySqlHandler { connection }
     }
 }
+
 impl DbHandler for MySqlHandler {
-    fn get_posts(&self) -> Vec<dyn Post> {
-        // implement mysql-specific logic to retrieve posts
-        todo!()
+    type PostError = ErrorImpl;
+
+    fn get_posts(&self) -> Result<Vec<PostImpl>, ErrorImpl> {
+        use crate::aardwolf_models::schema::posts::dsl::*;
+
+        let mut conn = self.connection.get()?;
+        posts
+            .load::<PostImpl>(&mut conn)
+            .map_err(|err| ErrorImpl::new(format!("Failed to retrieve posts: {}", err)))
     }
 
-    fn create_post(&self, post: Post) -> Result<(), dyn Error> {
-        // implement mysql-specific logic to create a post
-        todo!()
+    fn create_post(&self, post: PostImpl) -> Result<PostImpl, ErrorImpl> {
+        use crate::schema::posts;
+
+        if post.title.is_empty() || post.content.is_empty() {
+            return Err(ErrorImpl::new("Title and content are required".to_string()));
+        }
+
+        let conn = self.connection.get()?;
+        diesel::insert_into(posts::table)
+            .values(&post)
+            .execute(&mut conn)
+            .map(|_| post)
+            .map_err(|err| ErrorImpl::new(format!("Failed to create post: {}", err)))
     }
 
-    fn update_post(&self, post_id: i32, post: Post) -> Result<(), Error> {
-        // implement mysql-specific logic to update a post
-        todo!()
+    fn update_post(&self, post_id: i32, post: PostImpl) -> Result<PostImpl, ErrorImpl> {
+        use crate::schema::posts::dsl::*;
+
+        if post.title.is_empty() || post.content.is_empty() {
+            return Err(ErrorImpl::new("Title and content are required".to_string()));
+        }
+
+        if post_id <= 0 {
+            return Err(ErrorImpl::new("Invalid post ID".to_string()));
+        }
+
+        let conn = self.connection.get()?;
+        diesel::update(posts.find(post_id))
+            .set((title.eq(post.title), content.eq(post.content)))
+            .execute(&mut conn)
+            .map(|_| post)
+            .map_err(|err| ErrorImpl::new(format!("Failed to update post: {}", err)))
     }
 
-    fn delete_post(&self, post_id: i32) -> Result<(), Error> {
-        // implement mysql-specific logic to delete a post
-        todo!()
+    fn delete_post(&self, post_id: i32) -> Result<(), ErrorImpl> {
+        use crate::schema::posts::dsl::*;
+
+        if post_id <= 0 {
+            return Err(ErrorImpl::new("Invalid post ID".to_string()));
+        }
+
+        let conn = self.connection.get()?;
+        diesel::delete(posts.find(post_id))
+            .execute(&conn)
+            .map(|_| ())
+            .map_err(|err| ErrorImpl::new(format!("Failed to delete post: {}", err)))
     }
 
-    fn like_post(&self, post_id: i32) -> Result<(), Error> {
-        // implement mysql-specific logic to like a post
-        todo!()
-    }
+    fn like_post(&self, post_id: i32) -> Result<(), ErrorImpl> {
+        use crate::schema::posts::dsl::*;
 
-    fn comment_post(&self, post_id: i32, comment: Comment) -> Result<(), Error> {
-        // implement mysql-specific logic to comment on a post
-        todo!()
-    }
-}
-pub struct MySqlPost {
-    id: i32,
-    content: String,
-}
+        if post_id <= 0 {
+            return Err(ErrorImpl::new("Invalid post ID".to_string()));
+        }
 
-impl Post for MySqlPost {
-    fn get_id(&self) -> i32 {
-        self.id
-    }
-
-    fn get_content(&self) -> String {
-        self.content.clone()
+        let conn = self.connection.get()?;
+        diesel::update(posts.find(post_id))
+            .set(likes.eq(likes + 1))
+            .execute(&mut conn)
+            .map(|_| ())
+            .map_err(|err| ErrorImpl::new(format!("Failed to like post: {}", err)))
     }
 }

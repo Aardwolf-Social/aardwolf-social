@@ -1,135 +1,137 @@
-// postgres.rs
-
-mod schema;
-use schema::posts::dsl::*;
-
+// aardwolf-api/api-database/src/postgres/postgres_main.rs
+use crate::database_main::DatabaseConnection;
 use crate::traits::db_handler::DbHandler;
-use aardwolf_api_common::models::error::Error;
-use aardwolf_api_common::models::posts::Post;
-pub(crate) use diesel::pg::PgConnection;
-use diesel::query_builder::QueryFragment;
-use diesel::query_dsl::RunQueryDsl;
-use diesel::r2d2::{ConnectionManager, Pool};
-use diesel::result::Error as DieselError;
-use serde::{Deserialize, Serialize};
+use aardwolf_api_common::models::posts::PostImpl;
+use aardwolf_api_common::models::error::ErrorImpl;
 
-pub struct PostgresHandler {
-    connection: PgConnection,
-    pool: Pool<ConnectionManager<PgConnection>>,
-    connection_url: String,
-    is_active: bool,
-    schema: Vec<String>,
+pub struct PgHandler {
+    conn: DatabaseConnection,
 }
 
-pub trait MyConnection {
-    fn execute_query(
-        &mut self,
-        query: Box<dyn QueryFragment<PgConnection> + 'static>,
-    ) -> Result<(), DieselError>;
-    fn execute_transaction(
-        &mut self,
-        transaction: Box<dyn QueryFragment<PgConnection> + 'static>,
-    ) -> Result<(), DieselError>;
-}
-
-impl MyConnection for PostgresHandler {
-    fn execute_query(
-        &mut self,
-        query: Box<dyn QueryFragment<PgConnection> + 'static>,
-    ) -> Result<(), DieselError> {
-        query.execute(&mut self.connection)?;
-        Ok(())
-    }
-
-    fn execute_transaction(
-        &mut self,
-        transaction: Box<dyn QueryFragment<PgConnection> + 'static>,
-    ) -> Result<(), DieselError> {
-        transaction.execute(&mut self.connection)?;
-        Ok(())
+impl PgHandler {
+    pub fn new(conn: DatabaseConnection) -> Self {
+        PgHandler { conn }
     }
 }
 
-impl DbHandler for PostgresHandler {
-    fn get_posts(&self) -> Result<Vec<Box<dyn Post>>, Box<dyn Error>> {
-        use schema::posts::dsl::*;
+impl DbHandler for PgHandler {
+    type PostError = ErrorImpl;
 
-        let connection = &self.connection;
-
-        let results = posts.load::<PgSqlPost>(connection).optional()?;
-
-        match results {
-            Some(posts) => Ok(posts.into_iter().map(Box::new).collect()),
-            None => Err(Box::new(PgSqlError {
-                message: "Not found".to_string(),
-            })),
+    fn get_posts(&self) -> Result<Vec<PostImpl>, ErrorImpl> {
+        let query = "SELECT * FROM posts";
+        match self.conn.query(query) {
+            Ok(rows) => {
+                let mut posts = Vec::new();
+                for row in rows {
+                    let post = PostImpl {
+                        id: row.get("id"),
+                        title: row.get("title"),
+                        content: row.get("content"),
+                        created_at: row.get("created_at"),
+                        updated_at: row.get("updated_at"),
+                        author: row.get("author"),
+                    };
+                    posts.push(post);
+                }
+                Ok(posts)
+            }
+            Err(err) => Err(ErrorImpl::new(format!("Failed to retrieve posts: {}", err))),
         }
     }
 
-    fn create_post(&self, post: Box<dyn Post>) -> Result<(), Box<dyn Error>> {
-        // implement create_post logic here
-        todo!()
+    fn create_post(&self, post: PostImpl) -> Result<PostImpl, ErrorImpl> {
+        if post.title.is_empty() || post.content.is_empty() {
+            return Err(ErrorImpl::new("Title and content are required".to_string()));
+        }
+
+        match self.conn.execute("INSERT INTO posts (title, content) VALUES (?, ?)", &[&post.title, &post.content]) {
+            Ok(_) => Ok(post),
+            Err(err) => Err(ErrorImpl::new(format!("Failed to create post: {}", err))),
+        }
     }
 
-    fn update_post(&self, post_id: i32, post: Box<dyn Post>) -> Result<(), Box<dyn Error>> {
-        // implement update_post logic here
-        todo!()
+    fn update_post(&self, post_id: i32, post: PostImpl) -> Result<PostImpl, ErrorImpl> {
+        if post.title.is_empty() || post.content.is_empty() {
+            return Err(ErrorImpl::new("Title and content are required".to_string()));
+        }
+
+        // Check if post ID is valid (i.e., greater than 0)
+        if post_id <= 0 {
+            return Err(ErrorImpl::new("Invalid post ID".to_string()));
+        }
+
+        // Check if post exists in the database
+        let query = format!("SELECT * FROM posts WHERE id = {}", post_id);
+        match self.conn.query(query) {
+            Ok(rows) => {
+                if rows.is_empty() {
+                    return Err(ErrorImpl::new(format!("Post with ID {} does not exist", post_id)));
+                }
+            }
+            Err(err) => {
+                return Err(ErrorImpl::new(format!("Failed to check if post exists: {}", err)));
+            }
+        }
+
+        // Update the post
+        match self.conn.execute("UPDATE posts SET title = ?, content = ? WHERE id = ?", &[&post.title, &post.content, &post_id]) {
+            Ok(_) => Ok(post),
+            Err(err) => Err(ErrorImpl::new(format!("Failed to update post: {}", err))),
+        }
     }
 
-    fn delete_post(&self, post_id: i32) -> Result<(), Box<dyn Error>> {
-        // implement delete_post logic here
-        todo!()
+    fn delete_post(&self, post_id: i32) -> Result<(), ErrorImpl> {
+        // Check if post ID is valid (i.e., greater than 0)
+        if post_id <= 0 {
+            return Err(ErrorImpl::new("Invalid post ID".to_string()));
+        }
+
+        // Check if post exists in the database
+        let query = format!("SELECT * FROM posts WHERE id = {}", post_id);
+        match self.conn.query(query) {
+            Ok(rows) => {
+                if rows.is_empty() {
+                    return Err(ErrorImpl::new(format!("Post with ID {} does not exist", post_id)));
+                }
+            }
+            Err(err) => {
+                return Err(ErrorImpl::new(format!("Failed to check if post exists: {}", err)));
+            }
+        }
+
+        // Delete the post
+        let query = format!("DELETE FROM posts WHERE id = {}", post_id);
+        match self.conn.execute(query) {
+            Ok(_) => Ok(()), // Return Ok(()) to indicate success
+            Err(err) => Err(ErrorImpl::new(format!("Failed to delete post: {}", err))),
+        }
     }
 
-    fn like_post(&self, post_id: i32) -> Result<(), Box<dyn Error>> {
-        // implement like_post logic here
-        todo!()
-    }
-}
+    fn like_post(&self, post_id: i32) -> Result<(), ErrorImpl> {
+        // Check if post ID is valid (i.e., greater than 0)
+        if post_id <= 0 {
+            return Err(ErrorImpl::new("Invalid post ID".to_string()));
+        }
 
-#[derive(Debug)]
-pub struct PgSqlError {
-    message: String,
-}
+        // Check if post exists in the database
+        let query = format!("SELECT * FROM posts WHERE id = {}", post_id);
+        match self.conn.query(query) {
+            Ok(rows) => {
+                if rows.is_empty() {
+                    return Err(ErrorImpl::new(format!("Post with ID {} does not exist", post_id)));
+                }
+            }
+            Err(err) => {
+                return Err(ErrorImpl::new(format!("Failed to check if post exists: {}", err)));
+            }
+        }
 
-impl Error for PgSqlError {
-    fn get_message(&self) -> String {
-        self.message.clone()
-    }
-
-    fn get_code(&self) -> i32 {
-        // implement get_code logic here
-        todo!()
-    }
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct PgSqlPost {
-    pub id: i32,
-    pub title: String,
-    pub content: String,
-    pub created_at: String,
-    pub updated_at: String,
-}
-
-impl Post for PgSqlPost {
-    fn get_id(&self) -> i32 {
-        self.id
+        // Increment like count for the post
+        let query = format!("UPDATE posts SET likes = likes + 1 WHERE id = {}", post_id);
+        match self.conn.execute(query) {
+            Ok(_) => Ok(()),
+            Err(err) => Err(ErrorImpl::new(format!("Failed to like post: {}", err))),
+        }
     }
 
-    fn get_title(&self) -> String {
-        self.title.clone()
-    }
-
-    fn get_content(&self) -> String {
-        self.content.clone()
-    }
-
-    fn get_created_at(&self) -> String {
-        self.created_at.clone()
-    }
-
-    fn get_updated_at(&self) -> String {
-        self.updated_at.clone()
-    }
 }

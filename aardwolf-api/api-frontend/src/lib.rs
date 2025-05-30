@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-
-// API endpoints
-mod api_post_routes;
-mod api_user_routes;
-=======
-// frontend-api/src/lib.rs
+// // aardwolf-api/api-frontend/src/lib.rs aardwolf
 mod api_post_routes;
 mod api_user_routes;
 
